@@ -50,7 +50,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function TransitionsModal() {
+interface AddServiceModalProps {
+	aggregatorUrl: string;
+}
+
+export default function AddServiceModal(props: AddServiceModalProps) {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const [friendlyName, setFriendlyName] = React.useState("");
@@ -85,7 +89,7 @@ export default function TransitionsModal() {
 			return;
 		}
 
-		const url = process.env.REACT_APP_AGGREGATOR_URL + APIRoutes.aggregator.ADD_SERVICE;
+		const url = props.aggregatorUrl + APIRoutes.aggregator.ADD_SERVICE;
 		const requestHeaders: HeadersInit = new Headers();
 		requestHeaders.set("Content-Type", "application/json");
 

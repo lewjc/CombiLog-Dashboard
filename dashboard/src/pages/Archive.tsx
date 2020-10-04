@@ -21,6 +21,7 @@ import { useSpring, animated } from "react-spring/web.cjs"; // web.cjs is requir
 import { TransitionProps } from "@material-ui/core/transitions";
 import { LazyLog } from "react-lazylog";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Config from "../config";
 
 function MinusSquare(props: SvgIconProps) {
 	return (
@@ -126,7 +127,11 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-export default function Archive() {
+interface ArchiveProps {
+	config: Config;
+}
+
+export default function Archive(props: ArchiveProps) {
 	const classes = useStyles();
 	const [structure, setStructure] = useState<ArchiveFileStructure | null>(null);
 	const theme = useTheme();
@@ -134,7 +139,7 @@ export default function Archive() {
 	const [text, setText] = useState(" ");
 
 	useEffect(() => {
-		const url = process.env.REACT_APP_ARCHIVE_URL + APIRoutes.archiver.GET_FILE_STRUCTURE;
+		const url = props.config.archiveUrl + APIRoutes.archiver.GET_FILE_STRUCTURE;
 		fetch(url)
 			.then((response) => {
 				if (response.ok) {
@@ -155,7 +160,7 @@ export default function Archive() {
 		if (node.viewable) {
 			const path = node.path?.split("/");
 			if (path) {
-				let url = process.env.REACT_APP_ARCHIVE_URL;
+				let url = props.config.archiveUrl;
 				if (url) {
 					console.log(path);
 					switch (path[1]) {

@@ -29,6 +29,7 @@ import RealtimeLogs from "./pages/RealtimeLogs";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Archive from "./pages/Archive";
 import NotFound from "./pages/NotFound";
+import Config from "./config";
 
 const drawerWidth = 240;
 
@@ -94,7 +95,11 @@ const iconMap: any = {
 	"Realtime Logs": <MessageIcon />,
 };
 
-export default function App() {
+interface AppPropTypes {
+	config: Config;
+}
+
+export default function App(props: AppPropTypes) {
 	const classes = useStyles();
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.down("sm"));
@@ -179,13 +184,13 @@ export default function App() {
 							<Dashboard />
 						</Route>
 						<Route path="/Combilog/Services">
-							<Service />
+							<Service config={props.config} />
 						</Route>
 						<Route path="/Combilog/RealtimeLogs">
-							<RealtimeLogs />
+							<RealtimeLogs config={props.config} />
 						</Route>
 						<Route path="/Combilog/Archive">
-							<Archive />
+							<Archive config={props.config} />
 						</Route>
 						<Route component={NotFound} /> {/* The Default not found component */}
 					</Switch>

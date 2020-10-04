@@ -10,6 +10,7 @@ import MaterialTable, { Column } from "material-table";
 import APIRoutes from "../constants/APIRoutes";
 import { Service as ServiceObject } from "../types/Service";
 import { GetServicesResponse } from "../types/ApiResponses";
+import Config from "../config";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -78,7 +79,12 @@ const columns: Column<Object>[] = [
 	},
 ];
 
-export default function Service() {
+interface ServicePropType {
+	config: Config;
+}
+
+export default function Service(props: ServicePropType) {
+	console.log(props);
 	const classes = useStyles();
 	const [services, setServices] = useState<ServiceObject[] | null>(null);
 	useEffect(() => {
@@ -86,8 +92,7 @@ export default function Service() {
 	}, []);
 
 	const getServices = () => {
-		console.log(process.env.REACT_APP_AGGREGATOR_URL);
-		const url = process.env.REACT_APP_AGGREGATOR_URL + APIRoutes.aggregator.GET_ALL_SERVICES;
+		const url = props.config.aggregatorApiUrl + APIRoutes.aggregator.GET_ALL_SERVICES;
 		fetch(url)
 			.then((response) => {
 				if (response.ok) {
@@ -126,7 +131,7 @@ export default function Service() {
 					<Grid item container direction="row"></Grid>
 				</Grid>
 				<Grid item container xs={6}>
-					<AddServiceModal />
+					<AddServiceModal aggregatorUrl={props.config.aggregatorApiUrl} />
 				</Grid>
 				<Grid item container xs={6}>
 					<Button

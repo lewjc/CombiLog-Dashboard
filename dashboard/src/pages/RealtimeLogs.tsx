@@ -7,6 +7,7 @@ import { makeStyles, createStyles, useTheme, Theme } from "@material-ui/core/sty
 import Container from "@material-ui/core/Container";
 import { LazyLog } from "react-lazylog";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Config from "../config";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -44,9 +45,12 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-const websocketURL = `${process.env.REACT_APP_AGGREGATOR_CONSUMER_ENDPOINT}?connectionType=consumer`;
+interface RealtimeLogsProps {
+	config: Config;
+}
 
-export default function RealtimeLogs() {
+export default function RealtimeLogs(props: RealtimeLogsProps) {
+	const websocketURL = `${props.config.aggregatorSocketUrl}?connectionType=consumer`;
 	const classes = useStyles();
 	const [open, onOpenSocket] = useState(false);
 	const theme = useTheme();
