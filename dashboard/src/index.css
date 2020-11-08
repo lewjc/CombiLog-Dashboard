@@ -1,0 +1,47 @@
+body {
+	margin: 0;
+	font-family: "Roboto Mono", monospace;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+html {
+	background-color: #f1f1f1;
+}
+
+.MuiTreeItem-label {
+	font-size: small !important;
+}
+
+.MuiTable-root {
+	table-layout: fixed !important;
+	overflow-wrap: break-word;
+}
+
+.MTableToolbar-title-36 {
+	overflow: inherit !important;
+}
+
+.MuiSlider-valueLabel > span > span {
+	color: black !important;
+}
+
+.dropzone {
+	flex: 1 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	border-width: 2px;
+	border-radius: 2px;
+	border-color: #9c9c9c;
+	border-style: dashed;
+	background-color: #ffffff;
+	color: #545454;
+	cursor: pointer;
+	outline: none;
+	transition: border 0.24s ease-in-out;
+}

@@ -1,0 +1,5 @@
+{
+	"aggregatorApiUrl": "http://localhost:3000",
+	"aggregatorSocketUrl": "ws://localhost:13337",
+	"archiveUrl": "http://localhost:13338"
+}

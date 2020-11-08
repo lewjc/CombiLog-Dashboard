@@ -1,0 +1,1 @@
+docker build -t lewjc/combilog-dashboard:1.0.0 . && docker push lewjc/combilog-dashboard:1.0.0
