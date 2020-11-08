@@ -4,8 +4,6 @@ version: 2.1
 # Orchestrate or schedule a set of jobs
 jobs:
   build:
-    environment:
-      IMAGE_NAME: lewjc/combilog-dashboard
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
@@ -13,10 +11,8 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker image
-          command: cd dashboard && docker build -t $IMAGE_NAME:latest .
+          command: cd dashboard && docker build -t $IMAGE_NAME:latest
   publish-latest:
-    environment:
-      IMAGE_NAME: building-on-ci
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
@@ -24,6 +20,5 @@ jobs:
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
-            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:latest
-          
