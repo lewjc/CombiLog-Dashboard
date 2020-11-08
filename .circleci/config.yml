@@ -13,7 +13,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker image
-          command: cd dashboard && docker build -t $IMAGE_NAME:latest
+          command: cd dashboard && docker build -t $IMAGE_NAME:latest .
   publish-latest:
     docker:
       - image: circleci/buildpack-deps:stretch
