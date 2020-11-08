@@ -30,11 +30,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Archive from "./pages/Archive";
 import NotFound from "./pages/NotFound";
 import Config from "./config";
-<<<<<<< HEAD
 import { NotificationContainer } from "react-notifications";
 import "react-notifications/lib/notifications.css";
-=======
->>>>>>> feature/initial-dashboard
 
 const drawerWidth = 240;
 
@@ -109,15 +106,11 @@ export default function App(props: AppPropTypes) {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.down("sm"));
 	const [isOpen, setOpen] = useState(false);
-<<<<<<< HEAD
 	const [nav, setNav] = useState(0);
-=======
->>>>>>> feature/initial-dashboard
 	if (!matches && isOpen) {
 		setOpen(false);
 	}
 
-<<<<<<< HEAD
 	const getMain = () => {
 		switch (nav) {
 			case 0: {
@@ -139,8 +132,6 @@ export default function App(props: AppPropTypes) {
 		}
 	};
 
-=======
->>>>>>> feature/initial-dashboard
 	return (
 		<Router>
 			<div className={classes.root}>
@@ -194,7 +185,6 @@ export default function App(props: AppPropTypes) {
 					<Divider />
 					<List>
 						{["Dashboard", "Services", "Realtime Logs", "Archive"].map((text, index) => (
-<<<<<<< HEAD
 							<ListItem
 								button
 								onClick={() => {
@@ -207,47 +197,13 @@ export default function App(props: AppPropTypes) {
 								<ListItemIcon>{iconMap[text]}</ListItemIcon>
 								<ListItemText primary={text} />
 							</ListItem>
-=======
-							<Link className={classes.navLink} to={`/Combilog/${text.replace(" ", "")}`}>
-								<ListItem
-									button
-									onClick={() => {
-										if (matches) {
-											setOpen(false);
-										}
-									}}
-									key={text}>
-									<ListItemIcon>{iconMap[text]}</ListItemIcon>
-									<ListItemText primary={text} />
-								</ListItem>
-							</Link>
->>>>>>> feature/initial-dashboard
 						))}
 					</List>
 				</Drawer>
 				<main className={classes.content}>
-<<<<<<< HEAD
 					<NotificationContainer />
 					<div className={classes.toolbar} />
 					{getMain()}
-=======
-					<div className={classes.toolbar} />
-					<Switch>
-						<Route path="/Combilog/Dashboard">
-							<Dashboard />
-						</Route>
-						<Route path="/Combilog/Services">
-							<Service config={props.config} />
-						</Route>
-						<Route path="/Combilog/RealtimeLogs">
-							<RealtimeLogs config={props.config} />
-						</Route>
-						<Route path="/Combilog/Archive">
-							<Archive config={props.config} />
-						</Route>
-						<Route component={NotFound} /> {/* The Default not found component */}
-					</Switch>
->>>>>>> feature/initial-dashboard
 				</main>
 			</div>
 		</Router>
