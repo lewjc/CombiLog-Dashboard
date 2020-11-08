@@ -16,6 +16,8 @@ jobs:
           name: Build Docker image
           command: cd dashboard && docker build -t $IMAGE_NAME:latest .
   publish-latest:
+    requires:
+      - build
     docker:
       - image: circleci/buildpack-deps:stretch
     environment:
