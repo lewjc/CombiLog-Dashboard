@@ -8,11 +8,6 @@ body {
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
-<<<<<<< HEAD
-
-=======
- 
->>>>>>> feature/initial-dashboard
 html {
 	background-color: #f1f1f1;
 }
@@ -29,13 +24,12 @@ html {
 .MTableToolbar-title-36 {
 	overflow: inherit !important;
 }
-<<<<<<< HEAD
 
-.MuiSlider-valueLabel>span>span {
-	color: black !important
+.MuiSlider-valueLabel > span > span {
+	color: black !important;
 }
 
-.dropzone{
+.dropzone {
 	flex: 1 1;
 	display: flex;
 	flex-direction: column;
@@ -49,7 +43,5 @@ html {
 	color: #545454;
 	cursor: pointer;
 	outline: none;
-	transition: border .24s ease-in-out;
+	transition: border 0.24s ease-in-out;
 }
-=======
->>>>>>> feature/initial-dashboard

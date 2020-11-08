@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-<<<<<<< HEAD
 interface BulkUploadModalProps {
 	aggregatorUrl: string;
 }
@@ -63,16 +62,6 @@ export default function BulkUploadModal(props: BulkUploadModalProps) {
 		secret: "",
 	});
 
-=======
-interface AddServiceModalProps {
-	aggregatorUrl: string;
-}
-
-export default function AddServiceModal(props: AddServiceModalProps) {
-	const classes = useStyles();
-	const [open, setOpen] = React.useState(false);
-	const [friendlyName, setFriendlyName] = React.useState("");
->>>>>>> feature/initial-dashboard
 	const [createdService, setCreatedService] = React.useState<Service>();
 	const [isValid, setIsValid] = React.useState(true);
 
@@ -90,7 +79,6 @@ export default function AddServiceModal(props: AddServiceModalProps) {
 
 	const updateFriendlyName = (evt: ChangeEvent<HTMLInputElement>) => {
 		if (!evt.target) {
-<<<<<<< HEAD
 			setFormState({ ...formState, friendlyName: "" });
 		} else {
 			setFormState({ ...formState, friendlyName: evt.target.value });
@@ -117,15 +105,6 @@ export default function AddServiceModal(props: AddServiceModalProps) {
 		friendlyName: string,
 		secret: string
 	): Promise<Service | void> {
-=======
-			setFriendlyName("");
-		} else {
-			setFriendlyName(evt.target.value);
-		}
-	};
-
-	const onSubmit = async function registerService(friendlyName: string): Promise<Service | void> {
->>>>>>> feature/initial-dashboard
 		handleClose();
 
 		if (!RegExp(/^[0-9A-Za-z\s\-]+$/).test(friendlyName)) {
@@ -133,13 +112,10 @@ export default function AddServiceModal(props: AddServiceModalProps) {
 			return;
 		}
 
-<<<<<<< HEAD
 		if (!RegExp(/^[0-9A-Za-z\s\-]+$/).test(secret) || secret.length > 255) {
 			setIsValid(false);
 		}
 
-=======
->>>>>>> feature/initial-dashboard
 		const url = props.aggregatorUrl + APIRoutes.aggregator.ADD_SERVICE;
 		const requestHeaders: HeadersInit = new Headers();
 		requestHeaders.set("Content-Type", "application/json");
@@ -147,11 +123,7 @@ export default function AddServiceModal(props: AddServiceModalProps) {
 		return await fetch(url, {
 			method: "post",
 			headers: requestHeaders,
-<<<<<<< HEAD
 			body: JSON.stringify({ friendlyName, secret }),
-=======
-			body: JSON.stringify({ friendlyName }),
->>>>>>> feature/initial-dashboard
 		})
 			.then((resp) => {
 				if (resp.ok) {
@@ -204,23 +176,14 @@ export default function AddServiceModal(props: AddServiceModalProps) {
 				<form className={classes.root} noValidate autoComplete="off">
 					<Grid alignItems="flex-end" container direction="row" spacing={2}>
 						<Grid item xs={12}>
-<<<<<<< HEAD
 							Enter a name that represents the service you will be connecting to the secret. If a
 							secret is not provided one will be generated for you.
-=======
-							Enter a name that represents the service you will be connecting to the generated
-							secret:
->>>>>>> feature/initial-dashboard
 						</Grid>
 						<Grid item xs={6}>
 							<TextField
 								error={!isValid}
 								id="friendly-name"
-<<<<<<< HEAD
 								value={formState.friendlyName}
-=======
-								value={friendlyName}
->>>>>>> feature/initial-dashboard
 								onChange={updateFriendlyName}
 								label="Friendly Name"
 								helperText={isValid ? "" : "Must contain letters, numbers or dashes."}
@@ -228,7 +191,6 @@ export default function AddServiceModal(props: AddServiceModalProps) {
 							/>
 						</Grid>
 						<Grid item xs={6}>
-<<<<<<< HEAD
 							<TextField
 								error={!isValid}
 								id="secret"
@@ -240,14 +202,11 @@ export default function AddServiceModal(props: AddServiceModalProps) {
 							/>
 						</Grid>
 						<Grid item xs={12}>
-=======
->>>>>>> feature/initial-dashboard
 							<Button
 								className={classes.createService}
 								variant="contained"
 								color="primary"
 								onClick={() => {
-<<<<<<< HEAD
 									onSubmit(formState.friendlyName, formState.secret).then((result) => {
 										if (result && isValid) {
 											setCreatedService(result);
@@ -256,16 +215,6 @@ export default function AddServiceModal(props: AddServiceModalProps) {
 											handleOpen();
 										} else {
 											clearFormState();
-=======
-									onSubmit(friendlyName).then((result) => {
-										if (result && isValid) {
-											setCreatedService(result);
-											setFriendlyName("");
-											handleClose();
-											handleOpen();
-										} else {
-											setFriendlyName("");
->>>>>>> feature/initial-dashboard
 											handleOpen();
 										}
 									});
