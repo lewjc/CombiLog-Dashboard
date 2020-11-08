@@ -10,7 +10,8 @@ jobs:
       - image: circleci/buildpack-deps:stretch
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
           name: Build Docker image
           command: cd dashboard && docker build -t $IMAGE_NAME:latest .
@@ -20,7 +21,8 @@ jobs:
     environment:
       - IMAGE_NAME: lewjc/combilog-dashboard
     steps:
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
