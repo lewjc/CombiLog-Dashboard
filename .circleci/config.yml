@@ -6,6 +6,8 @@ jobs:
   build:
     environment:
       - IMAGE_NAME: lewjc/combilog-dashboard
+      - MAJOR_VERSION: 1
+      - MINOR_VERSION: 2
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
@@ -13,8 +15,17 @@ jobs:
       - setup_remote_docker:
           version: 19.03.13
       - run:
+          name: Set Tag
+          command: if [ "$CIRCLE_BRANCH" == "master" ];
+            then
+            TAG=$MAJOR_VERSION.$MINOR_VERSION.$CIRCLE_BUILD_NUM
+            else
+            TAG=latest-$CIRCLE_BRANCH
+            fi
+      - run:
           name: Build Docker image
-          command: cd dashboard && docker build -t $IMAGE_NAME:latest .
+          command: /
+            cd dashboard && docker build -t $IMAGE_NAME:$TAG .
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
