@@ -4,6 +4,8 @@ version: 2.1
 # Orchestrate or schedule a set of jobs
 jobs:
   build:
+    environment:
+      - IMAGE_NAME: lewjc/combilog-dashboard
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
@@ -15,6 +17,8 @@ jobs:
   publish-latest:
     docker:
       - image: circleci/buildpack-deps:stretch
+    environment:
+      - IMAGE_NAME: lewjc/combilog-dashboard
     steps:
       - setup_remote_docker
       - run:
