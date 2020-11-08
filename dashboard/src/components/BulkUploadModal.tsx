@@ -100,7 +100,9 @@ function BulkUpload(props: any) {
 			return fetch(url, {
 				method: "post",
 				headers: requestHeaders,
-				body: JSON.stringify(services),
+				body: JSON.stringify({
+					services,
+				}),
 			}).then((response) => {
 				props.closeModal();
 				NotificationManager.success("Bulk Upload was Successful");
