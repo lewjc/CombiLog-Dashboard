@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
+=======
+import React, { useState } from "react";
+>>>>>>> feature/initial-dashboard
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
@@ -8,7 +12,10 @@ import Container from "@material-ui/core/Container";
 import { LazyLog } from "react-lazylog";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Config from "../config";
+<<<<<<< HEAD
 import { Slider, Typography } from "@material-ui/core";
+=======
+>>>>>>> feature/initial-dashboard
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -55,14 +62,18 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 	const classes = useStyles();
 	const [open, onOpenSocket] = useState(false);
 	const theme = useTheme();
+<<<<<<< HEAD
 	const [selectedHighlightBound, setHighlightBound] = React.useState<number[]>([0, 0]);
 	const [shiftLower, setShiftLower] = React.useState(0);
 	const [shiftUpper, setShiftUpper] = React.useState(0);
+=======
+>>>>>>> feature/initial-dashboard
 	const isMobileView = useMediaQuery(theme.breakpoints.down("sm"));
 	const [state, setState] = useState({
 		follow: true,
 	});
 
+<<<<<<< HEAD
 	const [selectedLine, setSelectedLine] = useState(0);
 
 	const getSelectedLine = () => selectedLine;
@@ -124,14 +135,19 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 		}
 	};
 
+=======
+>>>>>>> feature/initial-dashboard
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setState({ ...state, [event.target.name]: event.target.checked });
 	};
 
+<<<<<<< HEAD
 	const handleHighlightBoundChange = (event: any, newValue: number | number[]) => {
 		setHighlightBound(newValue as number[]);
 	};
 
+=======
+>>>>>>> feature/initial-dashboard
 	return (
 		<Container maxWidth="lg" className={classes.root}>
 			<Grid container spacing={2}>
@@ -145,6 +161,7 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 								<p>Status: {open ? "Connected" : "Waiting for connection"}</p>
 							</Grid>
 						</Grid>
+<<<<<<< HEAD
 						<Grid item container direction="column" xs={8} md={8}>
 							<Grid item>
 								<h2>Options:</h2>
@@ -176,6 +193,24 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 										aria-labelledby="range-slider"
 									/>
 								</Grid>
+=======
+						<Grid item container direction="column" xs={8} md={6}>
+							<Grid item>
+								<h2>Options:</h2>
+							</Grid>
+							<Grid item>
+								<FormControlLabel
+									control={
+										<Switch
+											checked={state.follow}
+											onChange={handleChange}
+											name="follow"
+											color="secondary"
+										/>
+									}
+									label="Follow Logs"
+								/>
+>>>>>>> feature/initial-dashboard
 							</Grid>
 						</Grid>
 					</Grid>
@@ -186,6 +221,7 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 							follow={state.follow}
 							url={websocketURL}
 							websocket
+<<<<<<< HEAD
 							scrollToLine={selectedLine ?? undefined}
 							extraLines={1}
 							highlight={[
@@ -195,12 +231,16 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 							onHighlight={(range: Range) => {
 								console.log(range);
 							}}
+=======
+							extraLines={1}
+>>>>>>> feature/initial-dashboard
 							websocketOptions={{
 								onOpen: (e, sock) => {
 									console.info("Ready to recieve logs.");
 									onOpenSocket(true);
 								},
 								formatMessage: (e) => {
+<<<<<<< HEAD
 									// Calls the onclickEventsSet once when logs are now visible.
 									setLogClickEvents();
 									const message = JSON.parse(e);
@@ -209,6 +249,10 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 									}
 
 									return message.content;
+=======
+									console.log(e);
+									return JSON.parse(e).content;
+>>>>>>> feature/initial-dashboard
 								},
 							}}
 						/>

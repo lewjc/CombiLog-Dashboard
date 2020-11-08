@@ -1,7 +1,10 @@
 export default {
 	aggregator: {
 		ADD_SERVICE: "/api/service/add",
+<<<<<<< HEAD
 		ADD_BULK: "/api/service/bulk-add",
+=======
+>>>>>>> feature/initial-dashboard
 		GET_ALL_SERVICES: "/api/service/all",
 	},
 	archiver: {

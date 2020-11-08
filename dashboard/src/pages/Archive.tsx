@@ -22,7 +22,10 @@ import { TransitionProps } from "@material-ui/core/transitions";
 import { LazyLog } from "react-lazylog";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Config from "../config";
+<<<<<<< HEAD
 import { Switch, Typography } from "@material-ui/core";
+=======
+>>>>>>> feature/initial-dashboard
 
 function MinusSquare(props: SvgIconProps) {
 	return (
