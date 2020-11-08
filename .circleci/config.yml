@@ -19,8 +19,7 @@ jobs:
           command: if [ "$CIRCLE_BRANCH" == "master" ]; then TAG=$MAJOR_VERSION.$MINOR_VERSION.$CIRCLE_BUILD_NUM; else TAG=latest-$CIRCLE_BRANCH; fi
       - run:
           name: Build Docker image
-          command: /
-            cd dashboard && docker build -t $IMAGE_NAME:$TAG .
+          command: cd dashboard && docker build -t $IMAGE_NAME:$TAG .
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
