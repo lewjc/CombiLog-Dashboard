@@ -16,12 +16,7 @@ jobs:
           version: 19.03.13
       - run:
           name: Set Tag
-          command: if [ "$CIRCLE_BRANCH" == "master" ];
-            then
-            TAG=$MAJOR_VERSION.$MINOR_VERSION.$CIRCLE_BUILD_NUM
-            else
-            TAG=latest-$CIRCLE_BRANCH
-            fi
+          command: if [ "$CIRCLE_BRANCH" == "master" ]; then TAG=$MAJOR_VERSION.$MINOR_VERSION.$CIRCLE_BUILD_NUM; else TAG=latest-$CIRCLE_BRANCH; fi
       - run:
           name: Build Docker image
           command: /
