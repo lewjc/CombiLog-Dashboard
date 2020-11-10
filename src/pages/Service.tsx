@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import AddServiceModal from "../components/AddServiceModal";
 import Button from "@material-ui/core/Button";
-
+import OnlineIcon from "../icons/OnlineIcon";
 import CloudDoneIcon from "@material-ui/icons/CloudDone";
 import MaterialTable, { Column } from "material-table";
 import APIRoutes from "../constants/APIRoutes";
@@ -61,6 +61,19 @@ const columns: Column<Object>[] = [
 		title: "Secret",
 		field: "secret",
 	},
+	{
+		title: "Online",
+		field: "online",
+		render: (data) => {
+			const service = data as ServiceObject;
+			if (service.online) {
+				return <OnlineIcon colour={service.online ? "green" : "red"} />;
+			} else {
+				return <div />;
+			}
+		},
+	},
+
 	{
 		title: "Events",
 		field: "eventCount",
