@@ -6,8 +6,15 @@ interface OnlineIconProps {
 
 export default function OnlineIcon(props: OnlineIconProps) {
 	return (
-		<svg height="100" width="100">
-			<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill={props.colour} />
+		<svg height="25" width="25">
+			<circle
+				cx="12"
+				cy="12"
+				r="4"
+				stroke="black"
+				stroke-width="1"
+				fill={props.colour}
+			/>
 		</svg>
 	);
 }

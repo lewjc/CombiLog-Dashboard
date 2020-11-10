@@ -64,13 +64,9 @@ const columns: Column<Object>[] = [
 	{
 		title: "Online",
 		field: "online",
-		render: (data) => {
+		render: (data: any) => {
 			const service = data as ServiceObject;
-			if (service.online) {
-				return <OnlineIcon colour={service.online ? "green" : "red"} />;
-			} else {
-				return <div />;
-			}
+			return <OnlineIcon colour={service.online ? "#77ff77" : "#ff6060"} />;
 		},
 	},
 
@@ -81,7 +77,7 @@ const columns: Column<Object>[] = [
 	{
 		title: "Date Added",
 		field: "dateAdded",
-		render: (data) => {
+		render: (data: any) => {
 			if ((data as ServiceObject).dateAdded) {
 				const dataTransform = data as ServiceObject;
 				const date = new Date(dataTransform.dateAdded).toDateString();
@@ -106,7 +102,8 @@ export default function Service(props: ServicePropType) {
 	}, []);
 
 	const getServices = () => {
-		const url = props.config.aggregatorApiUrl + APIRoutes.aggregator.GET_ALL_SERVICES;
+		const url =
+			props.config.aggregatorApiUrl + APIRoutes.aggregator.GET_ALL_SERVICES;
 		fetch(url)
 			.then((response) => {
 				if (response.ok) {
@@ -134,10 +131,22 @@ export default function Service(props: ServicePropType) {
 							</Grid>
 							<Grid item>
 								<p>Registered: {services ? services.length : "-"}</p>
-								<p>Online: {services ? `${services.filter((x) => x.online).length}` : "-"}</p>
+								<p>
+									Online:{" "}
+									{services
+										? `${services.filter((x) => x.online).length}`
+										: "-"}
+								</p>
 							</Grid>
 						</Grid>
-						<Grid item container direction="column" alignContent="flex-end" md={8} xs={12}>
+						<Grid
+							item
+							container
+							direction="column"
+							alignContent="flex-end"
+							md={8}
+							xs={12}
+						>
 							<CloudDoneIcon className={classes.serviceIcon} />
 						</Grid>
 					</Grid>
@@ -158,7 +167,8 @@ export default function Service(props: ServicePropType) {
 						onClick={() => {
 							setServices(null);
 							getServices();
-						}}>
+						}}
+					>
 						Refresh Services
 					</Button>{" "}
 				</Grid>

@@ -137,20 +137,32 @@ export default function App(props: AppPropTypes) {
 			<div className={classes.root}>
 				<CssBaseline />
 				<AppBar position="fixed" className={classes.appBar}>
-					<Toolbar className={matches ? classes.toolbarCssMobile : classes.toolbarCssNoMobile}>
+					<Toolbar
+						className={
+							matches ? classes.toolbarCssMobile : classes.toolbarCssNoMobile
+						}
+					>
 						{matches ? (
 							<IconButton
 								className={classes.menuIcon}
 								edge="start"
 								color="inherit"
 								aria-label="menu"
-								onClick={() => setOpen(!isOpen)}>
+								onClick={() => setOpen(!isOpen)}
+							>
 								<MenuIcon />
 							</IconButton>
 						) : null}
 						<MenuItem>
-							<IconButton aria-label="show 11 new notifications" color="inherit">
-								<Badge badgeContent={11} className={classes.notification} color="primary">
+							<IconButton
+								aria-label="show 11 new notifications"
+								color="inherit"
+							>
+								<Badge
+									badgeContent={11}
+									className={classes.notification}
+									color="primary"
+								>
 									<NotificationsIcon />
 								</Badge>
 							</IconButton>
@@ -161,7 +173,8 @@ export default function App(props: AppPropTypes) {
 								aria-label="account of current user"
 								aria-controls="primary-search-account-menu"
 								aria-haspopup="true"
-								color="inherit">
+								color="inherit"
+							>
 								<AccountCircle />
 							</IconButton>
 							{matches ? null : <p>Profile</p>}{" "}
@@ -175,7 +188,8 @@ export default function App(props: AppPropTypes) {
 					classes={{
 						paper: classes.drawerPaper,
 					}}
-					anchor="left">
+					anchor="left"
+				>
 					<div className={classes.toolbar}>
 						<div className={classes.toolbarMast}>
 							<h2>CombiLog</h2>
@@ -184,20 +198,23 @@ export default function App(props: AppPropTypes) {
 					</div>
 					<Divider />
 					<List>
-						{["Dashboard", "Services", "Realtime Logs", "Archive"].map((text, index) => (
-							<ListItem
-								button
-								onClick={() => {
-									if (matches) {
-										setOpen(false);
-									}
-									setNav(index);
-								}}
-								key={text}>
-								<ListItemIcon>{iconMap[text]}</ListItemIcon>
-								<ListItemText primary={text} />
-							</ListItem>
-						))}
+						{["Dashboard", "Services", "Realtime Logs", "Archive"].map(
+							(text, index) => (
+								<ListItem
+									button
+									onClick={() => {
+										if (matches) {
+											setOpen(false);
+										}
+										setNav(index);
+									}}
+									key={text}
+								>
+									<ListItemIcon>{iconMap[text]}</ListItemIcon>
+									<ListItemText primary={text} />
+								</ListItem>
+							)
+						)}
 					</List>
 				</Drawer>
 				<main className={classes.content}>

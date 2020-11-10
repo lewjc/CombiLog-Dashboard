@@ -11,7 +11,11 @@ console.log(theme.palette);
 theme.palette.secondary.main = "#f4f4f4";
 theme.palette.secondary.dark = "#b8b8b8";
 
-fetch(`${window.location.pathname === "/" ? "" : window.location.pathname}/config/config.json`)
+fetch(
+	`${
+		window.location.pathname === "/" ? "" : window.location.pathname
+	}/config/config.json`
+)
 	.then((x) => x.json())
 	.then((conf) => {
 		if (isConfig(conf)) {
