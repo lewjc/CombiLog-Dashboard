@@ -6,10 +6,19 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import { useDropzone } from "react-dropzone";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { Backdrop, Button, CircularProgress, Fade, Modal } from "@material-ui/core";
+import {
+	Backdrop,
+	Button,
+	CircularProgress,
+	Fade,
+	Modal,
+} from "@material-ui/core";
 import APIRoutes from "../constants/APIRoutes";
 import { Service } from "../types/Service";
-import { NotificationContainer, NotificationManager } from "react-notifications";
+import {
+	NotificationContainer,
+	NotificationManager,
+} from "react-notifications";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -79,7 +88,9 @@ function BulkUpload(props: any) {
 		maxFiles: 1,
 	});
 
-	const doBulkUpload = (services: Array<Service>): Promise<Response | void> | null => {
+	const doBulkUpload = (
+		services: Array<Service>
+	): Promise<Response | void> | null => {
 		let validUpload = true;
 
 		services.forEach((service) => {
@@ -87,7 +98,10 @@ function BulkUpload(props: any) {
 				validUpload = false;
 			}
 
-			if (!RegExp(/^[0-9A-Za-z\s\-]+$/).test(service.secret) || service.secret.length > 255) {
+			if (
+				!RegExp(/^[0-9A-Za-z\s\-]+$/).test(service.secret) ||
+				service.secret.length > 255
+			) {
 				validUpload = false;
 			}
 		});
@@ -140,7 +154,8 @@ function BulkUpload(props: any) {
 					</section>
 					<Button
 						className={classes.showExampleButton}
-						onClick={() => setShowExample(!showExample)}>
+						onClick={() => setShowExample(!showExample)}
+					>
 						{showExample ? "Hide Example" : "Show Example"}
 					</Button>
 					{showExample ? (
@@ -184,7 +199,8 @@ export default function BulkUploadModal(props: any) {
 					variant="contained"
 					className={classes.buttonContainer}
 					color="primary"
-					onClick={handleOpen}>
+					onClick={handleOpen}
+				>
 					Bulk Upload Services
 				</Button>
 			</span>
@@ -198,9 +214,13 @@ export default function BulkUploadModal(props: any) {
 				BackdropComponent={Backdrop}
 				BackdropProps={{
 					timeout: 500,
-				}}>
+				}}
+			>
 				<Fade in={open}>
-					<BulkUpload closeModal={handleClose} aggregatorUrl={props.aggregatorUrl} />
+					<BulkUpload
+						closeModal={handleClose}
+						aggregatorUrl={props.aggregatorUrl}
+					/>
 				</Fade>
 			</Modal>
 		</div>

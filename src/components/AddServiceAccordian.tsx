@@ -32,8 +32,11 @@ export default function AddServiceAccordion() {
 				<AccordionSummary
 					expandIcon={<ExpandMoreIcon htmlColor="white" />}
 					aria-controls="panel1a-content"
-					id="panel1a-header">
-					<Typography className={classes.heading}>Register New Service</Typography>
+					id="panel1a-header"
+				>
+					<Typography className={classes.heading}>
+						Register New Service
+					</Typography>
 				</AccordionSummary>
 				<AccordionDetails></AccordionDetails>
 			</Accordion>

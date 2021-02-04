@@ -44,7 +44,12 @@ function PlusSquare(props: SvgIconProps) {
 
 function CloseSquare(props: SvgIconProps) {
 	return (
-		<SvgIcon className="close" fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
+		<SvgIcon
+			className="close"
+			fontSize="inherit"
+			style={{ width: 14, height: 14 }}
+			{...props}
+		>
 			{/* tslint:disable-next-line: max-line-length */}
 			<path d="M17.485 17.512q-.281.281-.682.281t-.696-.268l-4.12-4.147-4.12 4.147q-.294.268-.696.268t-.682-.281-.281-.682.294-.669l4.12-4.147-4.12-4.147q-.294-.268-.294-.669t.281-.682.682-.281.696 .268l4.12 4.147 4.12-4.147q.294-.268.696-.268t.682.281 .281.669-.294.682l-4.12 4.147 4.12 4.147q.294.268 .294.669t-.281.682zM22.047 22.074v0 0-20.147 0h-20.12v0 20.147 0h20.12zM22.047 24h-20.12q-.803 0-1.365-.562t-.562-1.365v-20.147q0-.776.562-1.351t1.365-.575h20.147q.776 0 1.351.575t.575 1.351v20.147q0 .803-.575 1.365t-1.378.562v0z" />
 		</SvgIcon>
@@ -54,7 +59,10 @@ function CloseSquare(props: SvgIconProps) {
 function TransitionComponent(props: TransitionProps) {
 	const style = useSpring({
 		from: { opacity: 0, transform: "translate3d(20px,0,0)" },
-		to: { opacity: props.in ? 1 : 0, transform: `translate3d(${props.in ? 0 : 20}px,0,0)` },
+		to: {
+			opacity: props.in ? 1 : 0,
+			transform: `translate3d(${props.in ? 0 : 20}px,0,0)`,
+		},
 	});
 
 	return (
@@ -77,7 +85,9 @@ const StyledTreeItem = withStyles((theme: Theme) =>
 			borderLeft: `1px dashed ${fade(theme.palette.text.primary, 0.4)}`,
 		},
 	})
-)((props: TreeItemProps) => <TreeItem {...props} TransitionComponent={TransitionComponent} />);
+)((props: TreeItemProps) => (
+	<TreeItem {...props} TransitionComponent={TransitionComponent} />
+));
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -125,6 +135,9 @@ const useStyles = makeStyles((theme: Theme) =>
 			height: "8em",
 			paddingRight: "5px",
 		},
+		option: {
+			paddingTop: "12px",
+		},
 	})
 );
 
@@ -166,19 +179,25 @@ export default function Archive(props: ArchiveProps) {
 				if (url) {
 					switch (path[1]) {
 						case "hot": {
-							url += APIRoutes.archiver.GET_HOT_FILE.replace("{logName}", path[2]);
+							url += APIRoutes.archiver.GET_HOT_FILE.replace(
+								"{logName}",
+								path[2]
+							);
 							break;
 						}
 						case "service": {
-							url += APIRoutes.archiver.GET_SERVICE_FILE.replace("{serviceName}", path[2]).replace(
-								"{logName}",
-								path[3]
-							);
+							url += APIRoutes.archiver.GET_SERVICE_FILE.replace(
+								"{serviceName}",
+								path[2]
+							).replace("{logName}", path[3]);
 							break;
 						}
 
 						case "archive": {
-							url += APIRoutes.archiver.GET_ARCHIVE_FILE.replace("{logName}", path[2]);
+							url += APIRoutes.archiver.GET_ARCHIVE_FILE.replace(
+								"{logName}",
+								path[2]
+							);
 							break;
 						}
 					}
@@ -203,8 +222,11 @@ export default function Archive(props: ArchiveProps) {
 			key={nodes.id}
 			nodeId={nodes.id}
 			label={nodes.name}
-			onClick={() => getArchivedFileData(nodes)}>
-			{Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
+			onClick={() => getArchivedFileData(nodes)}
+		>
+			{Array.isArray(nodes.children)
+				? nodes.children.map((node) => renderTree(node))
+				: null}
 		</StyledTreeItem>
 	);
 	let treeView = null;
@@ -215,7 +237,8 @@ export default function Archive(props: ArchiveProps) {
 				defaultExpanded={["root"]}
 				defaultCollapseIcon={<MinusSquare />}
 				defaultExpandIcon={<PlusSquare />}
-				defaultEndIcon={<CloseSquare />}>
+				defaultEndIcon={<CloseSquare />}
+			>
 				{renderTree(structure)}
 			</TreeView>
 		);
@@ -231,21 +254,27 @@ export default function Archive(props: ArchiveProps) {
 								<h2>Archive</h2>
 							</Grid>
 						</Grid>
-						<Grid item container direction="column" xs={8} md={8}>
-							<Grid item>
-								<h2>Options:</h2>
-							</Grid>
+						<Grid
+							item
+							container
+							direction="column"
+							justify="center"
+							xs={8}
+							md={8}
+						>
 							<Grid item container spacing={4}>
 								<Grid item>
-									<Typography id="range-slider" gutterBottom>
-										Follow Logs
-									</Typography>
-									<Switch
-										checked={showTree}
-										onChange={handleShowTreeChange}
-										name="follow"
-										color="secondary"
-									/>
+									<div className={classes.option}>
+										<Typography id="hide-tree" gutterBottom>
+											Hide Tree View
+										</Typography>
+										<Switch
+											checked={showTree}
+											onChange={handleShowTreeChange}
+											name="follow"
+											color="secondary"
+										/>
+									</div>
 								</Grid>
 							</Grid>
 						</Grid>
@@ -261,11 +290,17 @@ export default function Archive(props: ArchiveProps) {
 									isMobileView
 										? `${classes.archiveContainer} ${classes.archiveContainerMobile}`
 										: classes.archiveContainer
-								}>
+								}
+							>
 								{treeView}
 							</Grid>
 						) : null}
-						<Grid item xs={12} md={showTree ? 7 : 12} className={classes.logContainer}>
+						<Grid
+							item
+							xs={12}
+							md={showTree ? 7 : 12}
+							className={classes.logContainer}
+						>
 							<LazyLog enableSearch text={text} />
 						</Grid>
 					</Grid>

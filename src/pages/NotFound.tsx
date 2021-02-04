@@ -58,7 +58,13 @@ export default function NotFound() {
 			<Grid container spacing={2}>
 				<Grid item container direction="column" justify="space-between" xs={12}>
 					<Grid className={classes.blue} item container direction="row">
-						<Grid item container direction="column" justify="center" alignItems="center">
+						<Grid
+							item
+							container
+							direction="column"
+							justify="center"
+							alignItems="center"
+						>
 							<Grid item>
 								<h2>404 Page not found</h2>
 							</Grid>

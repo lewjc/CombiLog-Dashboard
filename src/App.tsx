@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 		backgroundColor: "#f1f1f1",
 		padding: theme.spacing(3),
+		marginTop: "50px",
 	},
 	navLink: {
 		color: "inherit",
