@@ -19,7 +19,7 @@ import SvgIcon, { SvgIconProps } from "@material-ui/core/SvgIcon";
 import Collapse from "@material-ui/core/Collapse";
 import { useSpring, animated } from "react-spring/web.cjs"; // web.cjs is required for IE 11 support
 import { TransitionProps } from "@material-ui/core/transitions";
-import { LazyLog } from "react-lazylog";
+import { LazyLog } from "react-combilazylog";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Config from "../config";
 import { Switch, Typography } from "@material-ui/core";

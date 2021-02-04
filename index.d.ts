@@ -1,5 +1,5 @@
 declare module "react-notifications";
-declare module "react-lazylog" {
+declare module "react-combilazylog" {
 	import {
 		Component,
 		ReactNode,

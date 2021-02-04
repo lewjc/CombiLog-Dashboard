@@ -10,7 +10,7 @@ import {
 	Theme,
 } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { LazyLog } from "react-lazylog";
+import { LazyLog } from "react-combilazylog";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Config from "../config";
 import { Slider, Typography } from "@material-ui/core";
