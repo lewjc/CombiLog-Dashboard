@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import AddServiceModal from "../components/AddServiceModal";
 import Button from "@material-ui/core/Button";
-
+import OnlineIcon from "../icons/OnlineIcon";
 import CloudDoneIcon from "@material-ui/icons/CloudDone";
 import MaterialTable, { Column } from "material-table";
 import APIRoutes from "../constants/APIRoutes";
@@ -62,13 +62,22 @@ const columns: Column<Object>[] = [
 		field: "secret",
 	},
 	{
+		title: "Online",
+		field: "online",
+		render: (data: any) => {
+			const service = data as ServiceObject;
+			return <OnlineIcon colour={service.online ? "#77ff77" : "#ff6060"} />;
+		},
+	},
+
+	{
 		title: "Events",
 		field: "eventCount",
 	},
 	{
 		title: "Date Added",
 		field: "dateAdded",
-		render: (data) => {
+		render: (data: any) => {
 			if ((data as ServiceObject).dateAdded) {
 				const dataTransform = data as ServiceObject;
 				const date = new Date(dataTransform.dateAdded).toDateString();
@@ -93,7 +102,8 @@ export default function Service(props: ServicePropType) {
 	}, []);
 
 	const getServices = () => {
-		const url = props.config.aggregatorApiUrl + APIRoutes.aggregator.GET_ALL_SERVICES;
+		const url =
+			props.config.aggregatorApiUrl + APIRoutes.aggregator.GET_ALL_SERVICES;
 		fetch(url)
 			.then((response) => {
 				if (response.ok) {
@@ -121,10 +131,22 @@ export default function Service(props: ServicePropType) {
 							</Grid>
 							<Grid item>
 								<p>Registered: {services ? services.length : "-"}</p>
-								<p>Online: {services ? `${services.filter((x) => x.online).length}` : "-"}</p>
+								<p>
+									Online:{" "}
+									{services
+										? `${services.filter((x) => x.online).length}`
+										: "-"}
+								</p>
 							</Grid>
 						</Grid>
-						<Grid item container direction="column" alignContent="flex-end" md={8} xs={12}>
+						<Grid
+							item
+							container
+							direction="column"
+							alignContent="flex-end"
+							md={8}
+							xs={12}
+						>
 							<CloudDoneIcon className={classes.serviceIcon} />
 						</Grid>
 					</Grid>
@@ -145,7 +167,8 @@ export default function Service(props: ServicePropType) {
 						onClick={() => {
 							setServices(null);
 							getServices();
-						}}>
+						}}
+					>
 						Refresh Services
 					</Button>{" "}
 				</Grid>

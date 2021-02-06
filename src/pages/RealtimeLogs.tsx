@@ -3,9 +3,14 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles, createStyles, useTheme, Theme } from "@material-ui/core/styles";
+import {
+	makeStyles,
+	createStyles,
+	useTheme,
+	Theme,
+} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { LazyLog } from "react-lazylog";
+import { LazyLog } from "react-combilazylog";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Config from "../config";
 import { Slider, Typography } from "@material-ui/core";
@@ -55,7 +60,10 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 	const classes = useStyles();
 	const [open, onOpenSocket] = useState(false);
 	const theme = useTheme();
-	const [selectedHighlightBound, setHighlightBound] = React.useState<number[]>([0, 0]);
+	const [selectedHighlightBound, setHighlightBound] = React.useState<number[]>([
+		0,
+		0,
+	]);
 	const [shiftLower, setShiftLower] = React.useState(0);
 	const [shiftUpper, setShiftUpper] = React.useState(0);
 	const isMobileView = useMediaQuery(theme.breakpoints.down("sm"));
@@ -81,7 +89,8 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 
 		const clickEvent = (event: MouseEvent) => {
 			if (event.target) {
-				const targetChildElement = (event.target as HTMLDivElement)?.firstChild as HTMLDivElement;
+				const targetChildElement = (event.target as HTMLDivElement)
+					?.firstChild as HTMLDivElement;
 
 				const getAttributes = (elem: HTMLDivElement | Element | null) =>
 					elem?.attributes.getNamedItem("id")?.value;
@@ -91,7 +100,8 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 				} else {
 					if (targetChildElement.parentNode?.parentNode) {
 						lineId = getAttributes(
-							(targetChildElement.parentNode?.parentNode as HTMLDivElement).previousElementSibling
+							(targetChildElement.parentNode?.parentNode as HTMLDivElement)
+								.previousElementSibling
 						);
 					}
 				}
@@ -103,9 +113,15 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 					if (event.shiftKey) {
 						const otherParsedLine = parseInt(lineId);
 						if (otherParsedLine > selectedLine) {
-							setHighlightBound([0, selectedLine + (otherParsedLine - selectedLine)]);
+							setHighlightBound([
+								0,
+								selectedLine + (otherParsedLine - selectedLine),
+							]);
 						} else if (otherParsedLine < selectedLine) {
-							setHighlightBound([selectedLine + (otherParsedLine - selectedLine), 0]);
+							setHighlightBound([
+								selectedLine + (otherParsedLine - selectedLine),
+								0,
+							]);
 						} else {
 							setHighlightBound([0, 0]);
 						}
@@ -128,7 +144,10 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 		setState({ ...state, [event.target.name]: event.target.checked });
 	};
 
-	const handleHighlightBoundChange = (event: any, newValue: number | number[]) => {
+	const handleHighlightBoundChange = (
+		event: any,
+		newValue: number | number[]
+	) => {
 		setHighlightBound(newValue as number[]);
 	};
 
@@ -136,7 +155,13 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 		<Container maxWidth="lg" className={classes.root}>
 			<Grid container spacing={2}>
 				<Grid item container direction="column" justify="space-between" xs={12}>
-					<Grid className={classes.blue} item container direction="row" justify="space-between">
+					<Grid
+						className={classes.blue}
+						item
+						container
+						direction="row"
+						justify="space-between"
+					>
 						<Grid item container direction="column" xs={8} md={4}>
 							<Grid item>
 								<h2>Realtime Log Viewer</h2>
@@ -145,10 +170,14 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 								<p>Status: {open ? "Connected" : "Waiting for connection"}</p>
 							</Grid>
 						</Grid>
-						<Grid item container direction="column" xs={8} md={8}>
-							<Grid item>
-								<h2>Options:</h2>
-							</Grid>
+						<Grid
+							item
+							container
+							direction="column"
+							justify="center"
+							xs={8}
+							md={8}
+						>
 							<Grid item container spacing={4}>
 								<Grid item>
 									<Typography id="range-slider" gutterBottom>
@@ -204,10 +233,6 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 									// Calls the onclickEventsSet once when logs are now visible.
 									setLogClickEvents();
 									const message = JSON.parse(e);
-									if (message.service) {
-										return `[${message.service.friendlyName}] ${message.content}`;
-									}
-
 									return message.content;
 								},
 							}}

@@ -161,7 +161,8 @@ export default function BulkUploadModal(props: BulkUploadModalProps) {
 								className={classes.affirmDetailsButton}
 								variant="contained"
 								color="secondary"
-								onClick={handleClose}>
+								onClick={handleClose}
+							>
 								Close
 							</Button>
 						</Grid>
@@ -176,8 +177,9 @@ export default function BulkUploadModal(props: BulkUploadModalProps) {
 				<form className={classes.root} noValidate autoComplete="off">
 					<Grid alignItems="flex-end" container direction="row" spacing={2}>
 						<Grid item xs={12}>
-							Enter a name that represents the service you will be connecting to the secret. If a
-							secret is not provided one will be generated for you.
+							Enter a name that represents the service you will be connecting to
+							the secret. If a secret is not provided one will be generated for
+							you.
 						</Grid>
 						<Grid item xs={6}>
 							<TextField
@@ -186,7 +188,9 @@ export default function BulkUploadModal(props: BulkUploadModalProps) {
 								value={formState.friendlyName}
 								onChange={updateFriendlyName}
 								label="Friendly Name"
-								helperText={isValid ? "" : "Must contain letters, numbers or dashes."}
+								helperText={
+									isValid ? "" : "Must contain letters, numbers or dashes."
+								}
 								color={"primary"}
 							/>
 						</Grid>
@@ -197,7 +201,9 @@ export default function BulkUploadModal(props: BulkUploadModalProps) {
 								value={formState.secret}
 								onChange={updateSecret}
 								label="Secret (optional)"
-								helperText={isValid ? "" : "Must contain letters, numbers or dashes."}
+								helperText={
+									isValid ? "" : "Must contain letters, numbers or dashes."
+								}
 								color={"primary"}
 							/>
 						</Grid>
@@ -207,18 +213,21 @@ export default function BulkUploadModal(props: BulkUploadModalProps) {
 								variant="contained"
 								color="primary"
 								onClick={() => {
-									onSubmit(formState.friendlyName, formState.secret).then((result) => {
-										if (result && isValid) {
-											setCreatedService(result);
-											clearFormState();
-											handleClose();
-											handleOpen();
-										} else {
-											clearFormState();
-											handleOpen();
+									onSubmit(formState.friendlyName, formState.secret).then(
+										(result) => {
+											if (result && isValid) {
+												setCreatedService(result);
+												clearFormState();
+												handleClose();
+												handleOpen();
+											} else {
+												clearFormState();
+												handleOpen();
+											}
 										}
-									});
-								}}>
+									);
+								}}
+							>
 								Create
 							</Button>
 						</Grid>
@@ -235,7 +244,8 @@ export default function BulkUploadModal(props: BulkUploadModalProps) {
 					variant="contained"
 					className={classes.buttonContainer}
 					color="primary"
-					onClick={handleOpen}>
+					onClick={handleOpen}
+				>
 					Register New Service
 				</Button>
 			</span>
@@ -249,7 +259,8 @@ export default function BulkUploadModal(props: BulkUploadModalProps) {
 				BackdropComponent={Backdrop}
 				BackdropProps={{
 					timeout: 500,
-				}}>
+				}}
+			>
 				<Fade in={open}>{content}</Fade>
 			</Modal>
 		</div>

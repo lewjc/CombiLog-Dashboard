@@ -3,9 +3,13 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles, createStyles, useTheme, Theme } from "@material-ui/core/styles";
+import {
+	makeStyles,
+	createStyles,
+	useTheme,
+	Theme,
+} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { LazyLog } from "react-lazylog";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -61,7 +65,13 @@ export default function RealtimeLogs() {
 		<Container maxWidth="lg" className={classes.root}>
 			<Grid container spacing={5}>
 				<Grid item container direction="row" xs={12}>
-					<Grid className={classes.blue} item container direction="row" justify="space-between">
+					<Grid
+						className={classes.blue}
+						item
+						container
+						direction="row"
+						justify="space-between"
+					>
 						<Grid item container direction="column" xs={8} md={4}>
 							<Grid item>
 								<h2>Dashboard</h2>
@@ -76,7 +86,8 @@ export default function RealtimeLogs() {
 							item
 							container
 							direction="row"
-							justify="space-between">
+							justify="space-between"
+						>
 							<Grid item container direction="column" xs={8} md={4}>
 								<Grid item>
 									<h2>Statistics</h2>
@@ -90,7 +101,8 @@ export default function RealtimeLogs() {
 							item
 							container
 							direction="row"
-							justify="space-between">
+							justify="space-between"
+						>
 							<Grid item container direction="column" xs={8} md={4}>
 								<Grid item>
 									<h2>Realtime Information</h2>
@@ -104,10 +116,11 @@ export default function RealtimeLogs() {
 							item
 							container
 							direction="row"
-							justify="space-between">
+							justify="space-between"
+						>
 							<Grid item container direction="column" xs={8} md={4}>
 								<Grid item>
-									<h2>Service Info</h2>
+									<h2>Top 5 Services</h2>
 								</Grid>
 							</Grid>
 						</Grid>
@@ -118,7 +131,8 @@ export default function RealtimeLogs() {
 							item
 							container
 							direction="row"
-							justify="space-between">
+							justify="space-between"
+						>
 							<Grid item container direction="column" xs={8} md={4}>
 								<Grid item>
 									<h2>Recent Events</h2>
