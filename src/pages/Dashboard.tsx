@@ -10,7 +10,6 @@ import {
 	Theme,
 } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { LazyLog } from "react-lazylog";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
