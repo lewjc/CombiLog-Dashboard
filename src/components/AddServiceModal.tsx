@@ -8,6 +8,8 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import APIRoutes from "../constants/APIRoutes";
 import { Service } from "../types/Service";
+import { NotificationManager } from "react-notifications";
+import { AddServiceResponse } from "../types/ApiResponses";
 
 const useStyles = makeStyles((theme) => ({
 	modal: {
@@ -50,11 +52,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-interface BulkUploadModalProps {
+interface AddServiceModalProps {
 	aggregatorUrl: string;
 }
 
-export default function BulkUploadModal(props: BulkUploadModalProps) {
+export default function AddServiceModal(props: AddServiceModalProps) {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const [formState, setFormState] = React.useState({
@@ -128,12 +130,20 @@ export default function BulkUploadModal(props: BulkUploadModalProps) {
 			.then((resp) => {
 				if (resp.ok) {
 					return resp.json();
+				} else {
+					return resp.json().then((x: AddServiceResponse) => {
+						NotificationManager.error(x.message);
+						return null;
+					});
 				}
 			})
 			.then((json) => {
-				return json.service as Service;
+				if (json) {
+					return json.service as Service;
+				}
 			})
 			.catch((error) => {
+				NotificationManager.error("Failed to add service.");
 				console.error(error);
 			});
 	};
@@ -196,14 +206,10 @@ export default function BulkUploadModal(props: BulkUploadModalProps) {
 						</Grid>
 						<Grid item xs={6}>
 							<TextField
-								error={!isValid}
 								id="secret"
 								value={formState.secret}
 								onChange={updateSecret}
 								label="Secret (optional)"
-								helperText={
-									isValid ? "" : "Must contain letters, numbers or dashes."
-								}
 								color={"primary"}
 							/>
 						</Grid>
