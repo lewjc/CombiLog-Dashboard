@@ -258,7 +258,7 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 								selectedLine + selectedHighlightBound[1],
 							]}
 							onHighlight={(range: Range) => {
-								console.log(range);
+								range;
 							}}
 							websocketOptions={{
 								onOpen: (e, sock) => {

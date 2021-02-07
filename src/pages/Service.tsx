@@ -94,7 +94,7 @@ interface ServicePropType {
 }
 
 export default function Service(props: ServicePropType) {
-	console.log(props);
+	props;
 	const classes = useStyles();
 	const [services, setServices] = useState<ServiceObject[] | null>(null);
 	useEffect(() => {
