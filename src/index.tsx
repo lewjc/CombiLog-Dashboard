@@ -7,7 +7,6 @@ import * as serviceWorker from "./serviceWorker";
 import { isConfig } from "./config";
 
 const theme = createMuiTheme();
-console.log(theme.palette);
 theme.palette.secondary.main = "#f4f4f4";
 theme.palette.secondary.dark = "#b8b8b8";
 
