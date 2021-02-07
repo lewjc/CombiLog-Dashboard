@@ -119,12 +119,10 @@ export default function ColourRuleModal(props: ColourRuleModalProps) {
 			isValid = { ...isValid, name: false };
 		}
 
-		rule.source;
 		if (rule.source.length <= 2 || rule.source === "(?:)") {
 			isValid = { ...isValid, rule: false };
 		}
 
-		isValid;
 		if (!isValid.name || !isValid.rule) {
 			setValidation({ ...validation, ...isValid });
 			return;
@@ -179,7 +177,6 @@ export default function ColourRuleModal(props: ColourRuleModalProps) {
 					return null;
 				}
 				colourRule.rule = RegExp(rule);
-				colourRule;
 				return colourRule;
 			})
 			.catch((error) => {
