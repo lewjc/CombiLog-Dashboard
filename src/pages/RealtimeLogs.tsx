@@ -10,10 +10,12 @@ import {
 	Theme,
 } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { LazyLog } from "react-combilazylog";
+import { ColourRule, LazyLog } from "react-combilazylog";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Config from "../config";
 import { Slider, Typography } from "@material-ui/core";
+import APIRoutes from "../constants/APIRoutes";
+import { GetColourRules } from "../types/ApiResponses";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -64,9 +66,10 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 		0,
 		0,
 	]);
-	const [shiftLower, setShiftLower] = React.useState(0);
-	const [shiftUpper, setShiftUpper] = React.useState(0);
-	const isMobileView = useMediaQuery(theme.breakpoints.down("sm"));
+
+	const [colourRules, setColourRules] = React.useState<
+		ColourRule[] | undefined
+	>();
 	const [state, setState] = useState({
 		follow: true,
 	});
@@ -151,6 +154,37 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 		setHighlightBound(newValue as number[]);
 	};
 
+	const getColourRules = () => {
+		const url =
+			props.config.aggregatorApiUrl + APIRoutes.aggregator.GET_COLOUR_RULES;
+		fetch(url)
+			.then((response) => {
+				if (response.ok) {
+					return response.json();
+				} else {
+					return response.json().then((json) => {
+						console.error(
+							"Error occured retrieving settings: " + json?.message
+						);
+						return null;
+					});
+				}
+			})
+			.then((responseObject: GetColourRules | null) => {
+				if (responseObject !== null) {
+					responseObject.colourRules.map((colourRule: ColourRule) => {
+						colourRule.rule = new RegExp(colourRule.rule);
+						return colourRule;
+					});
+					setColourRules(responseObject.colourRules);
+				} else {
+					setColourRules(undefined);
+				}
+			});
+	};
+
+	useEffect(getColourRules, []);
+
 	return (
 		<Container maxWidth="lg" className={classes.root}>
 			<Grid container spacing={2}>
@@ -216,7 +250,9 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 							url={websocketURL}
 							websocket
 							scrollToLine={selectedLine ?? undefined}
+							colourRules={colourRules}
 							extraLines={1}
+							rowHeight={20}
 							highlight={[
 								selectedLine + selectedHighlightBound[0],
 								selectedLine + selectedHighlightBound[1],
