@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,27 +11,27 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
 import SettingsApplicationsIcon from "@material-ui/icons/SettingsApplications";
+import DeviceHubIcon from "@material-ui/icons/DeviceHub";
 import MessageIcon from "@material-ui/icons/Message";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import ArchiveIcon from "@material-ui/icons/Archive";
-import MailIcon from "@material-ui/icons/Mail";
 import Service from "./pages/Service";
 import Badge from "@material-ui/core/Badge";
 import RealtimeLogs from "./pages/RealtimeLogs";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import Archive from "./pages/Archive";
 import NotFound from "./pages/NotFound";
 import Config from "./config";
 import { NotificationContainer } from "react-notifications";
 import "react-notifications/lib/notifications.css";
+import { GetSettingsResponse } from "./types/ApiResponses";
+import APIRoutes from "./constants/APIRoutes";
+import Setting from "./pages/Setting";
 
 const drawerWidth = 240;
 
@@ -93,9 +93,10 @@ const useStyles = makeStyles((theme) => ({
 
 const iconMap: any = {
 	Dashboard: <DashboardIcon />,
-	Services: <SettingsApplicationsIcon />,
+	Services: <DeviceHubIcon />,
 	Archive: <ArchiveIcon />,
 	"Realtime Logs": <MessageIcon />,
+	Settings: <SettingsApplicationsIcon />,
 };
 
 interface AppPropTypes {
@@ -108,6 +109,7 @@ export default function App(props: AppPropTypes) {
 	const matches = useMediaQuery(theme.breakpoints.down("sm"));
 	const [isOpen, setOpen] = useState(false);
 	const [nav, setNav] = useState(0);
+
 	if (!matches && isOpen) {
 		setOpen(false);
 	}
@@ -126,6 +128,10 @@ export default function App(props: AppPropTypes) {
 			}
 			case 3: {
 				return <Archive config={props.config} />;
+			}
+
+			case 4: {
+				return <Setting config={props.config} />;
 			}
 
 			default:
@@ -169,17 +175,6 @@ export default function App(props: AppPropTypes) {
 							</IconButton>
 							{matches ? null : <p>Notifications</p>}
 						</MenuItem>
-						<MenuItem>
-							<IconButton
-								aria-label="account of current user"
-								aria-controls="primary-search-account-menu"
-								aria-haspopup="true"
-								color="inherit"
-							>
-								<AccountCircle />
-							</IconButton>
-							{matches ? null : <p>Profile</p>}{" "}
-						</MenuItem>
 					</Toolbar>
 				</AppBar>
 				<Drawer
@@ -199,23 +194,27 @@ export default function App(props: AppPropTypes) {
 					</div>
 					<Divider />
 					<List>
-						{["Dashboard", "Services", "Realtime Logs", "Archive"].map(
-							(text, index) => (
-								<ListItem
-									button
-									onClick={() => {
-										if (matches) {
-											setOpen(false);
-										}
-										setNav(index);
-									}}
-									key={text}
-								>
-									<ListItemIcon>{iconMap[text]}</ListItemIcon>
-									<ListItemText primary={text} />
-								</ListItem>
-							)
-						)}
+						{[
+							"Dashboard",
+							"Services",
+							"Realtime Logs",
+							"Archive",
+							"Settings",
+						].map((text, index) => (
+							<ListItem
+								button
+								onClick={() => {
+									if (matches) {
+										setOpen(false);
+									}
+									setNav(index);
+								}}
+								key={text}
+							>
+								<ListItemIcon>{iconMap[text]}</ListItemIcon>
+								<ListItemText primary={text} />
+							</ListItem>
+						))}
 					</List>
 				</Drawer>
 				<main className={classes.content}>
