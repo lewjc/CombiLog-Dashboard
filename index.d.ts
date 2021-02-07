@@ -14,6 +14,12 @@ declare module "react-combilazylog" {
 		formatMessage?: (message: any) => string;
 	}
 
+	export interface ColourRule {
+		textColour?: string;
+		backgroundColour?: string;
+		rule: RegExp;
+		name: string;
+	}
 	export interface LazyLogProps {
 		caseInsensitive?: boolean;
 		containerStyle?: CSSProperties;
@@ -34,20 +40,19 @@ declare module "react-combilazylog" {
 		rowHeight?: number;
 		scrollToLine?: number;
 		selectableLines?: boolean;
+		colourRules?: Array<ColourRule>;
 		stream?: boolean;
 		style?: CSSProperties;
 		text?: string;
-		url: string;
+		url?: string;
 		websocket?: boolean;
 		websocketOptions?: WebsocketOptions;
 		width?: string | number;
 	}
 
 	export class LazyLog extends Component<LazyLogProps> {
-		static defaultProps: Partial<LazyLogProps>;
+		static Props: Partial<LazyLogProps>;
 	}
-
-	export default LazyLog;
 
 	export interface LineContentProps {
 		data: Array<{ text: string }>;
@@ -56,8 +61,8 @@ declare module "react-combilazylog" {
 		style?: CSSProperties;
 	}
 
-	export default class LineContent extends Component<LineContentProps> {
-		static defaultProps: Partial<LineContentProps>;
+	export class LineContent extends Component<LineContentProps> {
+		static Props: Partial<LineContentProps>;
 	}
 
 	export interface LineNumberProps {
@@ -67,8 +72,8 @@ declare module "react-combilazylog" {
 		style?: CSSProperties;
 	}
 
-	export default class LinePart extends Component<LineNumberProps> {
-		static defaultProps: Partial<LineNumberProps>;
+	export class LinePart extends Component<LineNumberProps> {
+		static Props: Partial<LineNumberProps>;
 	}
 
 	export interface LinePartProps {
@@ -77,11 +82,7 @@ declare module "react-combilazylog" {
 		style?: CSSProperties;
 	}
 
-	export default class LinePart extends Component<LinePartProps> {
-		static defaultProps: Partial<LinePartProps>;
-	}
-
-	export default class Loading extends Component {}
+	export class Loading extends Component {}
 
 	export interface ScrollFollowRenderProps {
 		onScroll: (args: {
@@ -101,8 +102,6 @@ declare module "react-combilazylog" {
 
 	export class ScrollFollow extends Component<ScrollFollowProps> {}
 
-	export default ScrollFollow;
-
 	export interface SearchBarProps {
 		onSearch?: (keyword: string) => void;
 		onClearSearch?: () => void;
@@ -112,7 +111,7 @@ declare module "react-combilazylog" {
 		disabled?: boolean;
 	}
 
-	export default class SearchBar extends Component<SearchBarProps> {
-		static defaultProps: Partial<SearchBarProps>;
+	export class SearchBar extends Component<SearchBarProps> {
+		static Props: Partial<SearchBarProps>;
 	}
 }

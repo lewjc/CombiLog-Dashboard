@@ -301,7 +301,7 @@ export default function Archive(props: ArchiveProps) {
 							md={showTree ? 7 : 12}
 							className={classes.logContainer}
 						>
-							<LazyLog enableSearch text={text} />
+							<LazyLog enableSearch text={text} rowHeight={20} />
 						</Grid>
 					</Grid>
 				</Grid>
