@@ -76,7 +76,6 @@ export default function Setting(props: SettingsPropType) {
 				}
 			})
 			.then((responseObject: GetSettingsResponse | null) => {
-				console.log(responseObject);
 				if (responseObject !== null) {
 					if (responseObject.settings.colourRules) {
 						responseObject.settings.colourRules = responseObject.settings.colourRules.map(
