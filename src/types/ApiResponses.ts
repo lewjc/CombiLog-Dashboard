@@ -3,24 +3,24 @@ import { Service } from "./Service";
 import { ColourRule } from "react-combilazylog";
 
 export type AddServiceResponse = {
-	message: string;
+  message: string;
 };
 
 export type GetServicesResponse = {
-	services: Service[];
-	message: string;
+  services: Service[];
+  message: string;
 };
 
 export type GetSettingsResponse = {
-	settings: Settings;
-	message?: string;
+  settings: Settings;
+  message?: string;
 };
 
 export type GetColourRules = {
-	colourRules: ColourRule[];
-	message?: string;
+  colourRules: ColourRule[];
+  message?: string;
 };
 
 export type DeleteColourRule = {
-	message: string;
+  message: string;
 };
