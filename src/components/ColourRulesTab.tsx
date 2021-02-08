@@ -24,8 +24,8 @@ You can test out your patterns against expected test using online regex testers 
 export default function ColourRulesTab(props: ColourRulesTabProps) {
 	return (
 		<Grid container spacing={2}>
-			<Grid item container direction="column">
-				<Grid justify="space-between" item container direction="row" xs={12}>
+			<Grid item container direction="column" wrap={"nowrap"}>
+				<Grid justify="space-between" item container xs={12}>
 					<Grid item container xs={10}>
 						<Grid item container direction="column">
 							<Grid item xs={3}>

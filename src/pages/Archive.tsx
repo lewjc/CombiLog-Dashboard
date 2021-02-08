@@ -94,13 +94,6 @@ const useStyles = makeStyles((theme: Theme) =>
 		root: {
 			flexGrow: 1,
 		},
-		paper: {
-			padding: theme.spacing(2),
-			color: theme.palette.text.secondary,
-		},
-		serviceStatus: {
-			marginLeft: 15,
-		},
 
 		blue: {
 			backgroundColor: "#3f51b5",
@@ -129,14 +122,11 @@ const useStyles = makeStyles((theme: Theme) =>
 				"0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
 			backgroundColor: "#222222",
 		},
-		serviceIcon: {
-			fill: "#465ee4",
-			width: "10em",
-			height: "8em",
-			paddingRight: "5px",
-		},
 		option: {
 			paddingTop: "12px",
+		},
+		archiveRoot: {
+			paddingTop: "15px",
 		},
 	})
 );
@@ -246,63 +236,67 @@ export default function Archive(props: ArchiveProps) {
 
 	return (
 		<Container maxWidth="lg" className={classes.root}>
-			<Grid container spacing={2}>
-				<Grid item container direction="column" justify="space-between" xs={12}>
-					<Grid className={classes.blue} item container direction="row">
-						<Grid item container direction="column" xs={8} md={4}>
-							<Grid item>
-								<h2>Archive</h2>
-							</Grid>
+			<Grid container>
+				<Grid className={classes.blue} item container direction="row">
+					<Grid item container direction="column" xs={8} md={4}>
+						<Grid item>
+							<h2>Archive</h2>
 						</Grid>
-						<Grid
-							item
-							container
-							direction="column"
-							justify="center"
-							xs={8}
-							md={8}
-						>
-							<Grid item container spacing={4}>
-								<Grid item>
-									<div className={classes.option}>
-										<Typography id="hide-tree" gutterBottom>
-											Hide Tree View
-										</Typography>
-										<Switch
-											checked={showTree}
-											onChange={handleShowTreeChange}
-											name="follow"
-											color="secondary"
-										/>
-									</div>
-								</Grid>
+					</Grid>
+					<Grid
+						item
+						container
+						direction="column"
+						justify="center"
+						xs={8}
+						md={8}
+					>
+						<Grid item container spacing={4}>
+							<Grid item>
+								<div className={classes.option}>
+									<Typography id="hide-tree" gutterBottom>
+										Hide Tree View
+									</Typography>
+									<Switch
+										checked={showTree}
+										onChange={handleShowTreeChange}
+										name="follow"
+										color="secondary"
+									/>
+								</div>
 							</Grid>
 						</Grid>
 					</Grid>
-					<br />
-					<Grid item container direction="row" justify="space-between">
-						{showTree ? (
-							<Grid
-								item
-								xs={12}
-								md={5}
-								className={
-									isMobileView
-										? `${classes.archiveContainer} ${classes.archiveContainerMobile}`
-										: classes.archiveContainer
-								}
-							>
-								{treeView}
-							</Grid>
-						) : null}
+				</Grid>
+				<br />
+				<Grid
+					className={classes.archiveRoot}
+					item
+					container
+					direction="row"
+					justify="space-between"
+				>
+					{showTree ? (
 						<Grid
 							item
 							xs={12}
-							md={showTree ? 7 : 12}
-							className={classes.logContainer}
+							md={5}
+							className={
+								isMobileView
+									? `${classes.archiveContainer} ${classes.archiveContainerMobile}`
+									: classes.archiveContainer
+							}
 						>
-							<LazyLog enableSearch text={text} rowHeight={20} />
+							{treeView}
 						</Grid>
+					) : null}
+					<Grid
+						item
+						xs={12}
+						md={showTree ? 7 : 12}
+						className={classes.logContainer}
+					>
+						<LazyLog enableSearch text={text} rowHeight={20} />
 					</Grid>
 				</Grid>
 			</Grid>

@@ -43,6 +43,8 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		logContainer: {
 			height: "70vh",
+			padding: 0,
+			paddingTop: "10px",
 		},
 		serviceIcon: {
 			fill: "#465ee4",
@@ -187,63 +189,62 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 
 	return (
 		<Container maxWidth="lg" className={classes.root}>
-			<Grid container spacing={2}>
-				<Grid item container direction="column" justify="space-between" xs={12}>
+			<Grid container>
+				<Grid
+					className={classes.blue}
+					item
+					container
+					direction="row"
+					justify="space-between"
+				>
+					<Grid item container direction="column" xs={8} md={4}>
+						<Grid item>
+							<h2>Realtime Log Viewer</h2>
+						</Grid>
+						<Grid item>
+							<p>Status: {open ? "Connected" : "Waiting for connection"}</p>
+						</Grid>
+					</Grid>
 					<Grid
-						className={classes.blue}
 						item
 						container
-						direction="row"
-						justify="space-between"
+						direction="column"
+						justify="center"
+						xs={8}
+						md={8}
 					>
-						<Grid item container direction="column" xs={8} md={4}>
+						<Grid item container spacing={4}>
 							<Grid item>
-								<h2>Realtime Log Viewer</h2>
+								<Typography id="range-slider" gutterBottom>
+									Follow Logs
+								</Typography>
+								<Switch
+									checked={state.follow}
+									onChange={handleChange}
+									name="follow"
+									color="secondary"
+								/>
 							</Grid>
 							<Grid item>
-								<p>Status: {open ? "Connected" : "Waiting for connection"}</p>
-							</Grid>
-						</Grid>
-						<Grid
-							item
-							container
-							direction="column"
-							justify="center"
-							xs={8}
-							md={8}
-						>
-							<Grid item container spacing={4}>
-								<Grid item>
-									<Typography id="range-slider" gutterBottom>
-										Follow Logs
-									</Typography>
-									<Switch
-										checked={state.follow}
-										onChange={handleChange}
-										name="follow"
-										color="secondary"
-									/>
-								</Grid>
-								<Grid item>
-									<Typography id="range-slider" gutterBottom>
-										Highlight Bounds
-									</Typography>
-									<Slider
-										color="secondary"
-										max={15}
-										min={-15}
-										value={selectedHighlightBound}
-										onChange={handleHighlightBoundChange}
-										valueLabelDisplay="auto"
-										disabled={selectedLine === 0}
-										aria-labelledby="range-slider"
-									/>
-								</Grid>
+								<Typography id="range-slider" gutterBottom>
+									Highlight Bounds
+								</Typography>
+								<Slider
+									color="secondary"
+									max={15}
+									min={-15}
+									value={selectedHighlightBound}
+									onChange={handleHighlightBoundChange}
+									valueLabelDisplay="auto"
+									disabled={selectedLine === 0}
+									aria-labelledby="range-slider"
+								/>
 							</Grid>
 						</Grid>
 					</Grid>
-					<br />
-					<Grid item className={`${classes.logContainer}`}>
+				</Grid>
+				<Grid item container className={`${classes.logContainer}`} xs={12}>
+					<Grid item className={`${classes.logContainer}`} xs={12}>
 						<LazyLog
 							enableSearch
 							follow={state.follow}

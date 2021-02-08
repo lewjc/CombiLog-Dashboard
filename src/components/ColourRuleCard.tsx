@@ -84,7 +84,7 @@ export default function ColourRuleCard(props: ColourRuleCardProps) {
 		<Grid item container xs={4}>
 			<Card className={classes.root}>
 				<CardContent>
-					<Grid container>
+					<Grid item container>
 						<Grid container item xs={8}>
 							<Typography variant="h5" component="h2">
 								{props.rule.name}
