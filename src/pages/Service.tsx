@@ -6,7 +6,7 @@ import AddServiceModal from "../components/AddServiceModal";
 import Button from "@material-ui/core/Button";
 import OnlineIcon from "../icons/OnlineIcon";
 import CloudDoneIcon from "@material-ui/icons/CloudDone";
-import MaterialTable, { Column } from "material-table";
+import MaterialTable, { Column } from "@material-table/core";
 import APIRoutes from "../constants/APIRoutes";
 import { Service as ServiceObject } from "../types/Service";
 import { GetServicesResponse } from "../types/ApiResponses";
