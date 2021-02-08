@@ -4,7 +4,13 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { ColourRule, LazyLog } from "react-combilazylog";
 import Config from "../config";
-import { Slider, Typography } from "@material-ui/core";
+import {
+  createStyles,
+  makeStyles,
+  Slider,
+  Theme,
+  Typography,
+} from "@material-ui/core";
 import APIRoutes from "../constants/APIRoutes";
 import { GetColourRules } from "../types/ApiResponses";
 

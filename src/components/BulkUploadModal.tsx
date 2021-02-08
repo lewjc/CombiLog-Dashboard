@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useState } from "react";
+import React, { ForwardedRef, forwardRef, useCallback, useState } from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import { useDropzone } from "react-dropzone";
 import {
