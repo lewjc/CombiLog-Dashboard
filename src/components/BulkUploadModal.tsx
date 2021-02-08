@@ -1,11 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { forwardRef, useCallback, useState } from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import Typography from "@material-ui/core/Typography";
 import { useDropzone } from "react-dropzone";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {
   Backdrop,
   Button,
@@ -15,10 +10,7 @@ import {
 } from "@material-ui/core";
 import APIRoutes from "../constants/APIRoutes";
 import { Service } from "../types/Service";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+import { NotificationManager } from "react-notifications";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -68,66 +60,73 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function BulkUpload(props: any) {
+// TODO: This file needs refactoring + also validation updates.
+
+const BulkUpload = forwardRef((props: any, ref: ForwardedRef<any>) => {
   const classes = useStyles();
   const [showExample, setShowExample] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const onDrop = useCallback((acceptedFiles) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const files = JSON.parse(reader.result?.toString() || "") as Service[];
-      setUploading(true);
-      doBulkUpload(files);
-    };
-    reader.readAsBinaryString(acceptedFiles[0]);
-  }, []);
 
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+  const doBulkUpload = useCallback(
+    (services: Array<Service>): Promise<Response | void> | null => {
+      let validUpload = true;
+
+      services.forEach((service) => {
+        if (!RegExp(/^[0-9A-Za-z\s-]+$/).test(service.friendlyName)) {
+          validUpload = false;
+        }
+
+        if (
+          !RegExp(/^[0-9A-Za-z\s-]+$/).test(service.secret) ||
+          service.secret.length > 255
+        ) {
+          validUpload = false;
+        }
+      });
+
+      if (validUpload) {
+        const url = props.aggregatorUrl + APIRoutes.aggregator.ADD_BULK;
+        const requestHeaders: HeadersInit = new Headers();
+        requestHeaders.set("Content-Type", "application/json");
+
+        return fetch(url, {
+          method: "post",
+          headers: requestHeaders,
+          body: JSON.stringify({
+            services,
+          }),
+        }).then(() => {
+          props.closeModal();
+          NotificationManager.success("Bulk Upload was Successful");
+          setUploading(false);
+        });
+      } else {
+        // Notificaiton, the uploaded file was invalid.
+        NotificationManager.error("Failed to parse file.");
+        return null;
+      }
+    },
+    [props]
+  );
+
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const files = JSON.parse(reader.result?.toString() || "") as Service[];
+        setUploading(true);
+        doBulkUpload(files);
+      };
+      reader.readAsBinaryString(acceptedFiles[0]);
+    },
+    [doBulkUpload]
+  );
+
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: "application/json",
     maxFiles: 1,
   });
-
-  const doBulkUpload = (
-    services: Array<Service>
-  ): Promise<Response | void> | null => {
-    let validUpload = true;
-
-    services.forEach((service) => {
-      if (!RegExp(/^[0-9A-Za-z\s\-]+$/).test(service.friendlyName)) {
-        validUpload = false;
-      }
-
-      if (
-        !RegExp(/^[0-9A-Za-z\s\-]+$/).test(service.secret) ||
-        service.secret.length > 255
-      ) {
-        validUpload = false;
-      }
-    });
-
-    if (validUpload) {
-      const url = props.aggregatorUrl + APIRoutes.aggregator.ADD_BULK;
-      const requestHeaders: HeadersInit = new Headers();
-      requestHeaders.set("Content-Type", "application/json");
-
-      return fetch(url, {
-        method: "post",
-        headers: requestHeaders,
-        body: JSON.stringify({
-          services,
-        }),
-      }).then((response) => {
-        props.closeModal();
-        NotificationManager.success("Bulk Upload was Successful");
-        setUploading(false);
-      });
-    } else {
-      // Notificaiton, the uploaded file was invalid.
-      NotificationManager.error("Failed to parse file.");
-      return null;
-    }
-  };
 
   const exampleObj = `[
  {
@@ -167,18 +166,11 @@ function BulkUpload(props: any) {
       )}
     </div>
   );
-}
+});
 
 export default function BulkUploadModal(props: any) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [formState, setFormState] = React.useState({
-    friendlyName: "",
-    secret: "",
-  });
-
-  // const [createdService, setCreatedService] = React.useState<Service>();
-  const [isValid, setIsValid] = React.useState(true);
 
   const handleOpen = () => {
     setOpen(true);
@@ -186,10 +178,6 @@ export default function BulkUploadModal(props: any) {
 
   const handleClose = () => {
     setOpen(false);
-    setIsValid(true);
-    // if (createdService) {
-    // 	setCreatedService(undefined);
-    // }
   };
 
   return (

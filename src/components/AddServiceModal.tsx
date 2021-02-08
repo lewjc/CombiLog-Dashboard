@@ -109,12 +109,12 @@ export default function AddServiceModal(props: AddServiceModalProps) {
   ): Promise<Service | void> {
     handleClose();
 
-    if (!RegExp(/^[0-9A-Za-z\s\-]+$/).test(friendlyName)) {
+    if (!RegExp(/^[0-9A-Za-z\s-]+$/).test(friendlyName)) {
       setIsValid(false);
       return;
     }
 
-    if (!RegExp(/^[0-9A-Za-z\s\-]+$/).test(secret) || secret.length > 255) {
+    if (!RegExp(/^[0-9A-Za-z\s-]+$/).test(secret) || secret.length > 255) {
       setIsValid(false);
     }
 

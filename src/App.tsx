@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -29,8 +29,6 @@ import NotFound from "./pages/NotFound";
 import Config from "./config";
 import { NotificationContainer } from "react-notifications";
 import "react-notifications/lib/notifications.css";
-import { GetSettingsResponse } from "./types/ApiResponses";
-import APIRoutes from "./constants/APIRoutes";
 import Setting from "./pages/Setting";
 
 const drawerWidth = 240;
@@ -115,7 +113,7 @@ export default function App(props: AppPropTypes) {
   }
 
   const getMain = () => {
-    switch (nav) {
+    switch (nav + 1) {
       case 0: {
         return <Dashboard />;
       }

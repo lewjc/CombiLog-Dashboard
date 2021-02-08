@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
@@ -96,11 +96,7 @@ interface ServicePropType {
 export default function Service(props: ServicePropType) {
   const classes = useStyles();
   const [services, setServices] = useState<ServiceObject[] | null>(null);
-  useEffect(() => {
-    getServices();
-  }, []);
-
-  const getServices = () => {
+  const getServices = useCallback(() => {
     const url =
       props.config.aggregatorApiUrl + APIRoutes.aggregator.GET_ALL_SERVICES;
     fetch(url)
@@ -117,7 +113,11 @@ export default function Service(props: ServicePropType) {
           setServices(responseObject);
         }
       });
-  };
+  }, [props.config.aggregatorApiUrl]);
+
+  useEffect(() => {
+    getServices();
+  }, [getServices]);
 
   return (
     <Container maxWidth="lg" className={classes.root}>
