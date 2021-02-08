@@ -71,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
     color: "inherit",
     textDecoration: "none",
   },
+  mainMast: {
+    marginBottom: "20px",
+  },
   mobile: {},
   toolbarCssNoMobile: {
     justifyContent: "flex-end",
@@ -213,7 +216,7 @@ export default function App(props: AppPropTypes) {
         </Drawer>
         <main className={classes.content}>
           <NotificationContainer />
-          <div className={classes.toolbar} />
+          <div className={classes.mainMast} />
           {getMain()}
         </main>
       </div>
