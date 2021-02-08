@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import AddServiceModal from "../components/AddServiceModal";
-import Button from "@material-ui/core/Button";
-
-import CloudDoneIcon from "@material-ui/icons/CloudDone";
-import MaterialTable, { Column } from "material-table";
-import APIRoutes from "../constants/APIRoutes";
-import { Service as ServiceObject } from "../types/Service";
-import { GetServicesResponse } from "../types/ApiResponses";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

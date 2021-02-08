@@ -1,14 +1,6 @@
-import React, { useState } from "react";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
-import {
-  makeStyles,
-  createStyles,
-  useTheme,
-  Theme,
-} from "@material-ui/core/styles";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -47,20 +39,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const websocketURL = `${process.env.REACT_APP_AGGREGATOR_CONSUMER_ENDPOINT}?connectionType=consumer`;
-
-export default function RealtimeLogs() {
+export default function Dashboard() {
   const classes = useStyles();
-
-  const [open, onOpenSocket] = useState(false);
-  const [state, setState] = useState({
-    follow: true,
-  });
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
-
   return (
     <Container maxWidth="lg" className={classes.root}>
       <Grid container spacing={5}>

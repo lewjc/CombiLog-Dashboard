@@ -12,8 +12,6 @@ import Container from "@material-ui/core/Container";
 import APIRoutes from "../constants/APIRoutes";
 import { ArchiveFileStructure } from "../types/ArchiveFileStructure";
 import TreeView from "@material-ui/lab/TreeView";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem, { TreeItemProps } from "@material-ui/lab/TreeItem";
 import SvgIcon, { SvgIconProps } from "@material-ui/core/SvgIcon";
 import Collapse from "@material-ui/core/Collapse";
@@ -89,7 +87,7 @@ const StyledTreeItem = withStyles((theme: Theme) =>
   <TreeItem {...props} TransitionComponent={TransitionComponent} />
 ));
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       flexGrow: 1,
@@ -159,7 +157,7 @@ export default function Archive(props: ArchiveProps) {
           setStructure(responseObject);
         }
       });
-  }, []);
+  }, [props.config.archiveUrl]);
 
   const getArchivedFileData = (node: ArchiveFileStructure) => {
     if (node.viewable) {

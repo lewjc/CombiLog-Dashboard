@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import Grid from "@material-ui/core/Grid";
-import {
-  makeStyles,
-  createStyles,
-  useTheme,
-  Theme,
-} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { ColourRule, LazyLog } from "react-combilazylog";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Config from "../config";
-import { Slider, Typography } from "@material-ui/core";
+import {
+  createStyles,
+  makeStyles,
+  Slider,
+  Theme,
+  Typography,
+} from "@material-ui/core";
 import APIRoutes from "../constants/APIRoutes";
 import { GetColourRules } from "../types/ApiResponses";
 
@@ -63,7 +60,6 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
   const websocketURL = `${props.config.aggregatorSocketUrl}?connectionType=consumer`;
   const classes = useStyles();
   const [open, onOpenSocket] = useState(false);
-  const theme = useTheme();
   const [selectedHighlightBound, setHighlightBound] = React.useState<number[]>([
     0,
     0,
@@ -78,7 +74,6 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
 
   const [selectedLine, setSelectedLine] = useState(0);
 
-  const getSelectedLine = () => selectedLine;
   /**
    * As the logger doesnt provide an interface into it's rows, manually setting events to take line info
    */
@@ -89,8 +84,6 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
     const logContainer: HTMLElement | null = document.querySelector(
       ".ReactVirtualized__Grid__innerScrollContainer"
     );
-
-    let mySelectedLine = getSelectedLine;
 
     const clickEvent = (event: MouseEvent) => {
       if (event.target) {
@@ -258,9 +251,9 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
                 selectedLine + selectedHighlightBound[0],
                 selectedLine + selectedHighlightBound[1],
               ]}
-              onHighlight={(range: Range) => {}}
+              onHighlight={() => {}}
               websocketOptions={{
-                onOpen: (e, sock) => {
+                onOpen: () => {
                   console.info("Ready to recieve logs.");
                   onOpenSocket(true);
                 },

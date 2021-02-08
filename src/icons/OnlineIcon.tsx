@@ -12,7 +12,7 @@ export default function OnlineIcon(props: OnlineIconProps) {
         cy="12"
         r="4"
         stroke="black"
-        stroke-width="1"
+        strokeWidth="1"
         fill={props.colour}
       />
     </svg>
