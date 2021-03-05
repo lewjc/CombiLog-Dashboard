@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -30,6 +30,8 @@ import Config from "./config";
 import { NotificationContainer } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 import Setting from "./pages/Setting";
+import packageJson from "../package.json";
+import APIRoutes from "./constants/APIRoutes";
 
 const drawerWidth = 240;
 
@@ -58,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   toolbarMast: {
-    paddingLeft: "20px",
     color: "rgb(54 54 54 / 87%)",
   },
   content: {
@@ -90,6 +91,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#dc9b49",
     },
   },
+  mastTitle: {
+    paddingLeft: "20px",
+  },
 }));
 
 const iconMap: any = {
@@ -107,11 +111,80 @@ interface AppPropTypes {
 export default function App(props: AppPropTypes) {
   const classes = useStyles();
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isOpen, setOpen] = useState(false);
   const [nav, setNav] = useState(0);
+  const [versions, setVersions] = useState({
+    dashboard: packageJson.version,
+    archiver: "~",
+    aggregator: "~",
+  });
 
-  if (!matches && isOpen) {
+  useEffect(() => {
+    const services: any = {
+      aggregator: {
+        up: false,
+        version: "",
+      },
+      archiver: {
+        up: false,
+        version: "",
+      },
+    };
+
+    const fetchVersion = (api: string, route: string, service: any) => {
+      return fetch(`${api}${route}`)
+        .then((response: Response) => {
+          console.log(response);
+          if (response.ok) {
+            return response.json();
+          } else {
+            setTimeout(() => {
+              fetchVersion(api, route, service);
+            }, 5000);
+            throw new Error(
+              `Could not get ${api}${route}. Unreachable version. Attempting again in 5 seconds...`
+            );
+          }
+        })
+        .then((json) => {
+          service.up = true;
+          service.version = json.version;
+        })
+        .then(() => {
+          if (services.aggregator.up && services.archiver.up) {
+            const aggregatorVersion: any = services.aggregator.version;
+            const archiverVersion: any = services.archiver.version;
+            const discernedVersions = {
+              aggregator: aggregatorVersion,
+              archiver: archiverVersion,
+            };
+
+            setVersions({
+              ...versions,
+              ...discernedVersions,
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    };
+
+    fetchVersion(
+      props.config.archiveUrl,
+      APIRoutes.archiver.VERSION,
+      services.archiver
+    );
+
+    fetchVersion(
+      props.config.aggregatorApiUrl,
+      APIRoutes.aggregator.VERSION,
+      services.aggregator
+    );
+  }, [versions, props.config]);
+
+  if (!isMobile && isOpen) {
     setOpen(false);
   }
 
@@ -147,10 +220,10 @@ export default function App(props: AppPropTypes) {
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar
             className={
-              matches ? classes.toolbarCssMobile : classes.toolbarCssNoMobile
+              isMobile ? classes.toolbarCssMobile : classes.toolbarCssNoMobile
             }
           >
-            {matches ? (
+            {isMobile ? (
               <IconButton
                 className={classes.menuIcon}
                 edge="start"
@@ -174,14 +247,14 @@ export default function App(props: AppPropTypes) {
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
-              {matches ? null : <p>Notifications</p>}
+              {isMobile ? null : <p>Notifications</p>}
             </MenuItem>
           </Toolbar>
         </AppBar>
         <Drawer
-          open={matches ? isOpen : true}
-          className={matches ? classes.mobile : classes.drawer}
-          variant={matches ? "temporary" : "permanent"}
+          open={isMobile ? isOpen : true}
+          className={isMobile ? classes.mobile : classes.drawer}
+          variant={isMobile ? "temporary" : "permanent"}
           classes={{
             paper: classes.drawerPaper,
           }}
@@ -189,8 +262,17 @@ export default function App(props: AppPropTypes) {
         >
           <div className={classes.toolbar}>
             <div className={classes.toolbarMast}>
-              <h2>CombiLog</h2>
-              <h4>v0.1.0</h4>
+              <h2 className={classes.mastTitle}>CombiLog</h2>
+              <Divider />
+              <h5 className={classes.mastTitle}>
+                Dashboard: v{versions.dashboard}
+              </h5>
+              <h5 className={classes.mastTitle}>
+                Aggregator: v{versions.aggregator}
+              </h5>
+              <h5 className={classes.mastTitle}>
+                Archive: v{versions.archiver}
+              </h5>
             </div>
           </div>
           <Divider />
@@ -200,7 +282,7 @@ export default function App(props: AppPropTypes) {
                 <ListItem
                   button
                   onClick={() => {
-                    if (matches) {
+                    if (isMobile) {
                       setOpen(false);
                     }
                     setNav(index);
