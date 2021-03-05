@@ -45,8 +45,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     serviceIcon: {
       fill: "#465ee4",
-      width: "10em",
-      height: "8em",
+      width: "8em",
+      height: "6em",
       paddingRight: "5px",
     },
   })
@@ -126,7 +126,7 @@ export default function Service(props: ServicePropType) {
           <Grid className={classes.blue} item container direction="row">
             <Grid item container direction="column" xs={8} md={4}>
               <Grid item>
-                <h2>My Services</h2>
+                <h2>Services</h2>
               </Grid>
               <Grid item>
                 <p>Registered: {services ? services.length : "-"}</p>
