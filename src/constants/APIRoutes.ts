@@ -8,11 +8,13 @@ export default {
     GET_SETTINGS: "/api/setting/all",
     GET_COLOUR_RULES: "/api/setting/colour-rules",
     DELETE_COLOUR_RULE: "/api/setting/colour-rules/{name}",
+    VERSION: "/api/version",
   },
   archiver: {
     GET_FILE_STRUCTURE: "/api/file/structure",
     GET_HOT_FILE: "/api/file/hot/{logName}",
     GET_SERVICE_FILE: "/api/file/{serviceName}/{logName}",
     GET_ARCHIVE_FILE: "/api/file/archive/{logName}",
+    VERSION: "/api/version",
   },
 };
