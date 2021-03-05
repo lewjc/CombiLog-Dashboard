@@ -182,7 +182,7 @@ export default function App(props: AppPropTypes) {
       APIRoutes.aggregator.VERSION,
       services.aggregator
     );
-  }, [versions, props.config]);
+  }, [props.config]);
 
   if (!isMobile && isOpen) {
     setOpen(false);
