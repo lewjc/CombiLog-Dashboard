@@ -135,7 +135,6 @@ export default function App(props: AppPropTypes) {
     const fetchVersion = (api: string, route: string, service: any) => {
       return fetch(`${api}${route}`)
         .then((response: Response) => {
-          console.log(response);
           if (response.ok) {
             return response.json();
           } else {
@@ -182,7 +181,7 @@ export default function App(props: AppPropTypes) {
       APIRoutes.aggregator.VERSION,
       services.aggregator
     );
-  }, [versions, props.config]);
+  }, [props.config]);
 
   if (!isMobile && isOpen) {
     setOpen(false);
