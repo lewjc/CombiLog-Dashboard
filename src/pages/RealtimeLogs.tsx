@@ -4,15 +4,8 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { ColourRule, LazyLog } from "react-combilazylog";
 import Config from "../config";
-import {
-  createStyles,
-  makeStyles,
-  Slider,
-  Theme,
-  Typography,
-} from "@material-ui/core";
-import APIRoutes from "../constants/APIRoutes";
-import { GetColourRules } from "../types/ApiResponses";
+import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
+import { getColourRules } from "../util/requestUtil";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,11 +53,6 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
   const websocketURL = `${props.config.aggregatorSocketUrl}?connectionType=consumer`;
   const classes = useStyles();
   const [open, onOpenSocket] = useState(false);
-  const [selectedHighlightBound, setHighlightBound] = React.useState<number[]>([
-    0,
-    0,
-  ]);
-
   const [colourRules, setColourRules] = React.useState<
     ColourRule[] | undefined
   >();
@@ -72,113 +60,15 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
     follow: true,
   });
 
-  const [selectedLine, setSelectedLine] = useState(0);
-
-  /**
-   * As the logger doesnt provide an interface into it's rows, manually setting events to take line info
-   */
-
-  const setLogClickEvents = () => {
-    // Function used to hook into and add click events to the lines of LazyLog.
-    // Quite hacky way so idea would be to eventually clone LazyLog & add onClick events to lines.
-    const logContainer: HTMLElement | null = document.querySelector(
-      ".ReactVirtualized__Grid__innerScrollContainer"
-    );
-
-    const clickEvent = (event: MouseEvent) => {
-      if (event.target) {
-        const targetChildElement = (event.target as HTMLDivElement)
-          ?.firstChild as HTMLDivElement;
-
-        const getAttributes = (elem: HTMLDivElement | Element | null) =>
-          elem?.attributes.getNamedItem("id")?.value;
-        let lineId;
-        if (targetChildElement?.attributes) {
-          lineId = getAttributes(targetChildElement);
-        } else {
-          if (targetChildElement.parentNode?.parentNode) {
-            lineId = getAttributes(
-              (targetChildElement.parentNode?.parentNode as HTMLDivElement)
-                .previousElementSibling
-            );
-          }
-        }
-
-        if (lineId) {
-          if (parseInt(lineId) === selectedLine) {
-            setSelectedLine(0);
-          }
-          if (event.shiftKey) {
-            const otherParsedLine = parseInt(lineId);
-            if (otherParsedLine > selectedLine) {
-              setHighlightBound([
-                0,
-                selectedLine + (otherParsedLine - selectedLine),
-              ]);
-            } else if (otherParsedLine < selectedLine) {
-              setHighlightBound([
-                selectedLine + (otherParsedLine - selectedLine),
-                0,
-              ]);
-            } else {
-              setHighlightBound([0, 0]);
-            }
-          } else {
-            const parsedLineId = parseInt(lineId);
-            setSelectedLine(parsedLineId);
-            setHighlightBound([0, 0]);
-          }
-        }
-      }
-    };
-
-    if (logContainer && !logContainer.ondblclick) {
-      // Not the best approach. needs revamping.
-      logContainer.ondblclick = clickEvent;
-    }
-  };
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const handleHighlightBoundChange = (
-    event: any,
-    newValue: number | number[]
-  ) => {
-    setHighlightBound(newValue as number[]);
-  };
-
-  const getColourRules = () => {
-    const url =
-      props.config.aggregatorApiUrl + APIRoutes.aggregator.GET_COLOUR_RULES;
-    fetch(url)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return response.json().then((json) => {
-            console.error(
-              "Error occured retrieving settings: " + json?.message
-            );
-            return null;
-          });
-        }
-      })
-      .then((responseObject: GetColourRules | null) => {
-        if (responseObject !== null) {
-          responseObject.colourRules.map((colourRule: ColourRule) => {
-            colourRule.rule = new RegExp(colourRule.rule);
-            return colourRule;
-          });
-          setColourRules(responseObject.colourRules);
-        } else {
-          setColourRules(undefined);
-        }
-      });
-  };
-
-  useEffect(getColourRules, []);
+  useEffect(() => {
+    getColourRules(props.config.aggregatorApiUrl).then((colourRules) => {
+      setColourRules(colourRules);
+    });
+  }, [props.config]);
 
   return (
     <Container maxWidth="lg" className={classes.root}>
@@ -218,21 +108,6 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
                   color="secondary"
                 />
               </Grid>
-              <Grid item>
-                <Typography id="range-slider" gutterBottom>
-                  Highlight Bounds
-                </Typography>
-                <Slider
-                  color="secondary"
-                  max={15}
-                  min={-15}
-                  value={selectedHighlightBound}
-                  onChange={handleHighlightBoundChange}
-                  valueLabelDisplay="auto"
-                  disabled={selectedLine === 0}
-                  aria-labelledby="range-slider"
-                />
-              </Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -243,15 +118,9 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
               follow={state.follow}
               url={websocketURL}
               websocket
-              scrollToLine={selectedLine ?? undefined}
               colourRules={colourRules}
               extraLines={1}
               rowHeight={20}
-              highlight={[
-                selectedLine + selectedHighlightBound[0],
-                selectedLine + selectedHighlightBound[1],
-              ]}
-              onHighlight={() => {}}
               websocketOptions={{
                 onOpen: () => {
                   console.info("Ready to recieve logs.");
@@ -259,7 +128,6 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
                 },
                 formatMessage: (e) => {
                   // Calls the onclickEventsSet once when logs are now visible.
-                  setLogClickEvents();
                   const message = JSON.parse(e);
                   return message.content;
                 },
