@@ -8,6 +8,8 @@ import { GetSettingsResponse } from "../types/ApiResponses";
 import Config from "../config";
 import { Settings } from "../types/Settings";
 import SettingsTabs from "../components/SettingsTabs";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Loading from "../components/Loading";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -139,7 +141,9 @@ export default function Setting(props: SettingsPropType) {
                 config={props.config}
                 reloadSettings={reloadSettings}
               />
-            ) : null}
+            ) : (
+              <Loading descriptor="Settings" />
+            )}
           </Grid>
         </Grid>
       </Grid>
