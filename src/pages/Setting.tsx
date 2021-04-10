@@ -102,7 +102,7 @@ export default function Setting(props: SettingsPropType) {
   });
 
   return (
-    <Container maxWidth="lg" className={classes.root}>
+    <Container maxWidth="xl" className={classes.root}>
       <Grid container spacing={2}>
         <Grid item container direction="column" justify="space-between" xs={12}>
           <Grid className={classes.blue} item container direction="row">
