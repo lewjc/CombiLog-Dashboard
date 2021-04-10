@@ -1,4 +1,7 @@
 declare module "react-notifications";
+
+declare module "react-animated-ellipsis";
+
 declare module "react-combilazylog" {
   import {
     Component,
@@ -24,6 +27,7 @@ declare module "react-combilazylog" {
     caseInsensitive?: boolean;
     containerStyle?: CSSProperties;
     enableSearch?: boolean;
+    enableExport?: boolean;
     extraLines?: number;
     fetchOptions?: RequestInit;
     follow?: boolean;
