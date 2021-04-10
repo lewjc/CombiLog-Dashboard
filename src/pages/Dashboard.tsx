@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Dashboard() {
   const classes = useStyles();
   return (
-    <Container maxWidth="lg" className={classes.root}>
+    <Container maxWidth="xl" className={classes.root}>
       <Grid container spacing={5}>
         <Grid item container direction="row" xs={12}>
           <Grid

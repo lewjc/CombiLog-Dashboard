@@ -1,4 +1,4 @@
-import React, { ForwardedRef, forwardRef, useCallback, useState } from "react";
+import React, { forwardRef, useCallback, useState } from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import { useDropzone } from "react-dropzone";
 import {
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 // TODO: This file needs refactoring + also validation updates.
 
-const BulkUpload = forwardRef((props: any, ref: ForwardedRef<any>) => {
+const BulkUpload = forwardRef((props: any, ref: any) => {
   const classes = useStyles();
   const [showExample, setShowExample] = useState(false);
   const [uploading, setUploading] = useState(false);

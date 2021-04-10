@@ -167,7 +167,7 @@ export default function Archive(props: ArchiveProps) {
   }
 
   return (
-    <Container maxWidth="lg" className={classes.root}>
+    <Container maxWidth="xl" className={classes.root}>
       <Grid container>
         <Grid className={classes.blue} item container direction="row">
           <Grid item container direction="column" xs={8} md={4}>
