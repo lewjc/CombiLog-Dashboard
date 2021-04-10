@@ -71,7 +71,7 @@ export default function RealtimeLogs(props: RealtimeLogsProps) {
   }, [props.config]);
 
   return (
-    <Container maxWidth="lg" className={classes.root}>
+    <Container maxWidth="xl" className={classes.root}>
       <Grid container>
         <Grid
           className={classes.blue}

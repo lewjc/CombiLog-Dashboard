@@ -32,6 +32,7 @@ import "react-notifications/lib/notifications.css";
 import Setting from "./pages/Setting";
 import packageJson from "../package.json";
 import APIRoutes from "./constants/APIRoutes";
+import ReactAnimatedEllipsis from "react-animated-ellipsis";
 
 const drawerWidth = 240;
 
@@ -108,39 +109,56 @@ interface AppPropTypes {
   config: Config;
 }
 
+interface ServiceVersion {
+  up: boolean;
+  name: string;
+  version: string;
+}
+
+interface VersionKey {
+  [key: string]: ServiceVersion;
+}
+
+interface Versions {
+  [key: string]: string | null;
+}
+
 export default function App(props: AppPropTypes) {
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isOpen, setOpen] = useState(false);
   const [nav, setNav] = useState(0);
-  const [versions, setVersions] = useState({
+  const [versions, setVersions] = useState<Versions>({
     dashboard: packageJson.version,
-    archiver: "~",
-    aggregator: "~",
+    archiver: null,
+    aggregator: null,
   });
 
   useEffect(() => {
-    const services: any = {
+    const services: VersionKey = {
       aggregator: {
         up: false,
         version: "",
+        name: "aggregator",
       },
       archiver: {
         up: false,
         version: "",
+        name: "archiver",
       },
     };
 
-    const fetchVersion = (api: string, route: string, service: any) => {
+    const fetchVersion = (
+      api: string,
+      route: string,
+      service: ServiceVersion
+    ) => {
       return fetch(`${api}${route}`)
         .then((response: Response) => {
           if (response.ok) {
             return response.json();
           } else {
-            setTimeout(() => {
-              fetchVersion(api, route, service);
-            }, 5000);
             throw new Error(
               `Could not get ${api}${route}. Unreachable version. Attempting again in 5 seconds...`
             );
@@ -151,22 +169,19 @@ export default function App(props: AppPropTypes) {
           service.version = json.version;
         })
         .then(() => {
-          if (services.aggregator.up && services.archiver.up) {
-            const aggregatorVersion: any = services.aggregator.version;
-            const archiverVersion: any = services.archiver.version;
-            const discernedVersions = {
-              aggregator: aggregatorVersion,
-              archiver: archiverVersion,
-            };
+          const versionedService: Versions = {};
+          versionedService[service.name] = service.version;
 
-            setVersions({
-              ...versions,
-              ...discernedVersions,
-            });
-          }
+          setVersions({
+            ...versions,
+            ...versionedService,
+          });
         })
         .catch((err) => {
           console.error(err);
+          setTimeout(() => {
+            fetchVersion(api, route, service);
+          }, 5000);
         });
     };
 
@@ -267,10 +282,24 @@ export default function App(props: AppPropTypes) {
                 Dashboard: v{versions.dashboard}
               </h5>
               <h5 className={classes.mastTitle}>
-                Aggregator: v{versions.aggregator}
+                Aggregator: v
+                {versions.aggregator ?? (
+                  <ReactAnimatedEllipsis
+                    fontSize="1rem"
+                    marginLeft="5px"
+                    spacing="0.3rem"
+                  />
+                )}
               </h5>
               <h5 className={classes.mastTitle}>
-                Archive: v{versions.archiver}
+                Archive: v
+                {versions.archiver ?? (
+                  <ReactAnimatedEllipsis
+                    fontSize="rem"
+                    marginLeft="5px"
+                    spacing="0.3rem"
+                  />
+                )}
               </h5>
             </div>
           </div>

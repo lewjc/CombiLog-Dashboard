@@ -8,6 +8,8 @@ import { GetSettingsResponse } from "../types/ApiResponses";
 import Config from "../config";
 import { Settings } from "../types/Settings";
 import SettingsTabs from "../components/SettingsTabs";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Loading from "../components/Loading";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -100,7 +102,7 @@ export default function Setting(props: SettingsPropType) {
   });
 
   return (
-    <Container maxWidth="lg" className={classes.root}>
+    <Container maxWidth="xl" className={classes.root}>
       <Grid container spacing={2}>
         <Grid item container direction="column" justify="space-between" xs={12}>
           <Grid className={classes.blue} item container direction="row">
@@ -139,7 +141,9 @@ export default function Setting(props: SettingsPropType) {
                 config={props.config}
                 reloadSettings={reloadSettings}
               />
-            ) : null}
+            ) : (
+              <Loading descriptor="Settings" />
+            )}
           </Grid>
         </Grid>
       </Grid>
