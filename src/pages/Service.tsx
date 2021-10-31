@@ -11,6 +11,7 @@ import APIRoutes from "../constants/APIRoutes";
 import { Service as ServiceObject } from "../types/Service";
 import { GetServicesResponse } from "../types/ApiResponses";
 import Config from "../config";
+import { NotificationManager } from "react-notifications";
 import BulkUploadModal from "../components/BulkUploadModal";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -112,6 +113,10 @@ export default function Service(props: ServicePropType) {
         } else {
           setServices(responseObject);
         }
+      })
+      .catch((err) => {
+        console.error(err);
+        NotificationManager.error("Could not load settings.");
       });
   }, [props.config.aggregatorApiUrl]);
 

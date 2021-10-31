@@ -1,5 +1,4 @@
 import React from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import ReactAnimatedEllipsis from "react-animated-ellipsis";
 

@@ -13,6 +13,7 @@ import MinusSquare from "../icons/MinusSquare";
 import PlusSquare from "../icons/PlusSquare";
 import CloseSquare from "../icons/CloseSquare";
 import { StyledTreeItem } from "../components/StyledTreeItem";
+import { NotificationManager } from "react-notifications";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -90,6 +91,10 @@ export default function Archive(props: ArchiveProps) {
         } else {
           setStructure(responseObject);
         }
+      })
+      .catch((error) => {
+        console.error(error);
+        NotificationManager.error("Could not load archive.");
       });
   }, [props.config]);
 

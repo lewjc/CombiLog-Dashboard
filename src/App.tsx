@@ -33,6 +33,7 @@ import Setting from "./pages/Setting";
 import packageJson from "../package.json";
 import APIRoutes from "./constants/APIRoutes";
 import ReactAnimatedEllipsis from "react-animated-ellipsis";
+import OnlineIcon from "./icons/OnlineIcon";
 
 const drawerWidth = 240;
 
@@ -40,7 +41,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
-
+  appHealth: {
+    verticalAlign: "middle",
+  },
   appBar: {
     width: "100%",
     zIndex: 2000,
@@ -171,11 +174,10 @@ export default function App(props: AppPropTypes) {
         .then(() => {
           const versionedService: Versions = {};
           versionedService[service.name] = service.version;
-
-          setVersions({
-            ...versions,
+          setVersions((prevState) => ({
+            ...prevState,
             ...versionedService,
-          });
+          }));
         })
         .catch((err) => {
           console.error(err);
@@ -277,6 +279,17 @@ export default function App(props: AppPropTypes) {
           <div className={classes.toolbar}>
             <div className={classes.toolbarMast}>
               <h2 className={classes.mastTitle}>CombiLog</h2>
+              <h5 className={classes.mastTitle}>
+                <span>
+                  System Health&nbsp;
+                  <OnlineIcon
+                    className={classes.appHealth}
+                    colour={
+                      versions.aggregator && versions.archiver ? "green" : "red"
+                    }
+                  />
+                </span>
+              </h5>
               <Divider />
               <h5 className={classes.mastTitle}>
                 Dashboard: v{versions.dashboard}
