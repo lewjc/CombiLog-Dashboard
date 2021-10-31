@@ -1,5 +1,5 @@
 # Stage 0, "build-stage", based on Node.js to build the frontend
-FROM node:alpine as build
+FROM node:14-alpine as build
 WORKDIR /app
 COPY package.json /app/
 COPY yarn.lock /app/
