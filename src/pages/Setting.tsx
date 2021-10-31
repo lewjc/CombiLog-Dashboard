@@ -8,8 +8,8 @@ import { GetSettingsResponse } from "../types/ApiResponses";
 import Config from "../config";
 import { Settings } from "../types/Settings";
 import SettingsTabs from "../components/SettingsTabs";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Loading from "../components/Loading";
+import { NotificationManager } from "react-notifications";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,18 +80,21 @@ export default function Setting(props: SettingsPropType) {
       .then((responseObject: GetSettingsResponse | null) => {
         if (responseObject !== null) {
           if (responseObject.settings.colourRules) {
-            responseObject.settings.colourRules = responseObject.settings.colourRules.map(
-              (rule) => {
+            responseObject.settings.colourRules =
+              responseObject.settings.colourRules.map((rule) => {
                 rule.rule = RegExp(rule.rule);
                 return rule;
-              }
-            );
+              });
           }
 
           setSettings(responseObject.settings);
         } else {
           setSettings(null);
         }
+      })
+      .catch((err) => {
+        console.error(err);
+        NotificationManager.error("Failed to fetch settings.");
       });
   };
 
