@@ -1,5 +1,6 @@
 import { ColourRule } from "react-combilazylog";
 import APIRoutes from "../constants/APIRoutes";
+import { NotificationManager } from "react-notifications";
 import { GetColourRules } from "../types/ApiResponses";
 
 export function handleGenericNon200Code(response: Response) {
@@ -35,5 +36,10 @@ export async function getColourRules(
       } else {
         return undefined;
       }
+    })
+    .catch((err) => {
+      NotificationManager.error("Failed to load colour rules.");
+      console.error(err);
+      return undefined;
     });
 }
