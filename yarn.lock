@@ -9942,10 +9942,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-notifications@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/react-notifications/-/react-notifications-1.7.2.tgz#e70e2c053f86321c0a7fa81ff638922e2fdd572f"
-  integrity sha512-3mlMiNLDQtp64IP+EnYx3xgmbdpzrLQiSO8AP+8o4LiYQC6HcgdVB+MMdGuYZ1ttfKeLgTgol2ESFQJhmz0O3Q==
+react-notifications@^1.7.3:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/react-notifications/-/react-notifications-1.7.3.tgz#86abe38e0b5cc2ec451dfad8993754ad3f23ef45"
+  integrity sha512-rxIgLaHOgTRQfGSOnxprRknQ+acMEQgBvlF645iTIggpN5IoplmaITxCRj/drqR/NIDldscvs/2FR7zNEmsTGA==
   dependencies:
     acorn "6.4.1"
     classnames "^2.1.1"
