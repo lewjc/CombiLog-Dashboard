@@ -9,7 +9,7 @@ COPY . /app/
 
 RUN yarn build
 
-FROM nginx:alpine
+FROM nginx:1.23.1-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
 WORKDIR /usr/share/nginx
