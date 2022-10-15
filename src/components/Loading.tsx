@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import ReactAnimatedEllipsis from "react-animated-ellipsis";
+import ReactLoading from "react-loading";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,11 +38,7 @@ export default function Loading(props: LoadingProps) {
       <span className={classes.loadingText}>
         <h1>
           Loading{` ${props.descriptor ?? ""} `}{" "}
-          <ReactAnimatedEllipsis
-            fontSize="rem"
-            marginLeft="5px"
-            spacing="0.3rem"
-          />
+          <ReactLoading color="gray" type="bubbles" height={20} width={30} />
         </h1>
       </span>
     </div>

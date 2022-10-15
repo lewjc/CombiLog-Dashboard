@@ -2,11 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import * as serviceWorker from "./serviceWorker";
 import Config, { EnvironmentConfig, isConfig } from "./config";
 
-const theme = createMuiTheme();
+const theme = createTheme();
 theme.palette.secondary.main = "#f4f4f4";
 theme.palette.secondary.dark = "#b8b8b8";
 

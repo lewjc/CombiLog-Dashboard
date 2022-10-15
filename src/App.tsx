@@ -32,7 +32,7 @@ import "react-notifications/lib/notifications.css";
 import Setting from "./pages/Setting";
 import packageJson from "../package.json";
 import APIRoutes from "./constants/APIRoutes";
-import ReactAnimatedEllipsis from "react-animated-ellipsis";
+import ReactLoading from "react-loading";
 import OnlineIcon from "./icons/OnlineIcon";
 
 const drawerWidth = 240;
@@ -98,6 +98,12 @@ const useStyles = makeStyles((theme) => ({
   mastTitle: {
     paddingLeft: "20px",
   },
+  versionTitle: {
+    paddingLeft: "20px",
+    display: "flex",
+    alignItems: "end",
+    gap: "10px",
+  },
 }));
 
 const iconMap: any = {
@@ -115,7 +121,7 @@ interface AppPropTypes {
 interface ServiceVersion {
   up: boolean;
   name: string;
-  version: string;
+  VERSION: string;
 }
 
 interface VersionKey {
@@ -142,13 +148,13 @@ export default function App(props: AppPropTypes) {
     const services: VersionKey = {
       aggregator: {
         up: false,
-        version: "",
         name: "aggregator",
+        VERSION: "",
       },
       archiver: {
         up: false,
-        version: "",
         name: "archiver",
+        VERSION: "",
       },
     };
 
@@ -157,7 +163,7 @@ export default function App(props: AppPropTypes) {
       route: string,
       service: ServiceVersion
     ) => {
-      return fetch(`${api}${route}`)
+      fetch(`${api}${route}`)
         .then((response: Response) => {
           if (response.ok) {
             return response.json();
@@ -167,24 +173,15 @@ export default function App(props: AppPropTypes) {
             );
           }
         })
-        .then((json) => {
-          service.up = true;
-          service.version = json.version;
-        })
-        .then(() => {
-          const versionedService: Versions = {};
-          versionedService[service.name] = service.version;
+        .then(({ VERSION }) =>
           setVersions((prevState) => ({
             ...prevState,
-            ...versionedService,
-          }));
-        })
-        .catch((err) => {
-          console.error(err);
-          setTimeout(() => {
-            fetchVersion(api, route, service);
-          }, 5000);
-        });
+            ...{
+              [service.name]: VERSION,
+            },
+          }))
+        )
+        .catch(() => setTimeout(() => fetchVersion(api, route, service), 5000));
     };
 
     fetchVersion(
@@ -294,23 +291,29 @@ export default function App(props: AppPropTypes) {
               <h5 className={classes.mastTitle}>
                 Dashboard: v{versions.dashboard}
               </h5>
-              <h5 className={classes.mastTitle}>
-                Aggregator: v
-                {versions.aggregator ?? (
-                  <ReactAnimatedEllipsis
-                    fontSize="1rem"
-                    marginLeft="5px"
-                    spacing="0.3rem"
+              <h5 className={classes.versionTitle}>
+                Aggregator:&nbsp;
+                {versions.aggregator ? (
+                  `v${versions.aggregator}`
+                ) : (
+                  <ReactLoading
+                    color="gray"
+                    type="bubbles"
+                    height={20}
+                    width={30}
                   />
                 )}
               </h5>
-              <h5 className={classes.mastTitle}>
-                Archive: v
-                {versions.archiver ?? (
-                  <ReactAnimatedEllipsis
-                    fontSize="rem"
-                    marginLeft="5px"
-                    spacing="0.3rem"
+              <h5 className={classes.versionTitle}>
+                Archive:&nbsp;
+                {versions.archiver ? (
+                  `v${versions.archiver}`
+                ) : (
+                  <ReactLoading
+                    color="gray"
+                    type="bubbles"
+                    height={20}
+                    width={30}
                   />
                 )}
               </h5>

@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     heading: {
       fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
+      fontWeight: 500,
     },
     buttonContainer: {
       width: "100%",
@@ -59,8 +59,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
-// TODO: This file needs refactoring + also validation updates.
 
 const BulkUpload = forwardRef((props: any, ref: any) => {
   const classes = useStyles();
@@ -110,7 +108,7 @@ const BulkUpload = forwardRef((props: any, ref: any) => {
   );
 
   const onDrop = useCallback(
-    (acceptedFiles) => {
+    (acceptedFiles: File[]) => {
       const reader = new FileReader();
       reader.onload = () => {
         const files = JSON.parse(reader.result?.toString() || "") as Service[];
